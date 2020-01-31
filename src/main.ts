@@ -20,7 +20,7 @@ window.onload = function() {
             autoCenter: Phaser.Scale.CENTER_BOTH,
             parent: "thegame",
             width: 1900,
-            height: 600
+            height: 900
         },
  
        // game background color

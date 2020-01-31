@@ -14,11 +14,14 @@ export class MenuScene extends Phaser.Scene {
 		var bg = this.add.sprite(0,0,'background');
         bg.setOrigin(0,0);
 
-        var text = this.add.text(800,100, "To infinity... and beyond!", {
+        var text = this.add.text(950,200, "To infinity... and beyond!", {
             font: "bold 32px Arial",
             align: "center",
             color: "white"
         });
+
+        // center the text
+        text.setOrigin(0.5);
         text.setInteractive({ useHandCursor: true });
         text.on('pointerdown', () => this.clickButton());
 

@@ -2,13 +2,30 @@ import * as Phaser from 'phaser';
 
 // the game itself
 let game ;
+
+let tabOfDegrees = [90,60,30,100,60,30];
+
+function getRandomDegree(){
+    
+    let rand = Math.floor(Math.random() * Math.floor(tabOfDegrees.length));
+    let degree = tabOfDegrees[rand];
+    tabOfDegrees.splice(rand, 1)
+    return degree;
+}
+
+function redefineDegrees(){
+    tabOfDegrees = [90,60,30,100,60,30];
+    gameOptions.slices.forEach(slice => {
+        slice.degrees = getRandomDegree();
+    });
+}
  
 let gameOptions = {
  
     // slices configuration
     slices: [
         {
-            degrees: 90,
+            degrees: getRandomDegree(),
             startColor: 0xadebeb,
             endColor: 0x1f7a7a,
             rings: 3,
@@ -18,7 +35,7 @@ let gameOptions = {
             enabled: true
         },
         {
-            degrees: 60,
+            degrees: getRandomDegree(),
             startColor: 0x00ff00,
             endColor: 0x004400,
             rings: 200,
@@ -28,7 +45,7 @@ let gameOptions = {
             enabled: true
         },
         {
-            degrees: 30,
+            degrees: getRandomDegree(),
             startColor: 0xccd9ff,
             endColor: 0x002699,
             rings: 200,
@@ -38,7 +55,7 @@ let gameOptions = {
             enabled: true
         },
         {
-            degrees: 100,
+            degrees: getRandomDegree(),
             startColor: 0x666666,
             endColor: 0x999999,
             rings: 200,
@@ -48,7 +65,7 @@ let gameOptions = {
             enabled: true
         },
         {
-            degrees: 60,
+            degrees: getRandomDegree(),
             startColor: 0xffb3ff,
             endColor: 0x990099,
             rings: 200,
@@ -58,7 +75,7 @@ let gameOptions = {
             enabled: true
         },
         {
-            degrees: 30,
+            degrees: getRandomDegree(),
             startColor: 0xff0000,
             endColor: 0xff8800,
             rings: 200,
@@ -104,7 +121,11 @@ export class WheelScene extends Phaser.Scene{
     wheelContainer;
     pin;
     prizeText;
+    prizeDescText;
     canSpin;
+    iconBig;
+    points = 1000;
+    pointText;
 
     // constructor
     constructor(){
@@ -128,6 +149,41 @@ export class WheelScene extends Phaser.Scene{
     // method to be executed once the scene has been created
     create(){
 
+        this.createWheel();
+
+        // adding the text field
+        this.prizeText = this.add.text(400, 300, "Spin the wheel", {
+            font: "bold 32px Arial",
+            align: "center",
+            color: "white"
+        });
+        this.prizeDescText = this.add.text(400, 370, "To get started !", {
+            font: "bold 24px Arial",
+            align: "center",
+            color: "white"
+        });
+
+        // center the text
+        this.prizeText.setOrigin(0.5);
+        // center the text
+        this.prizeDescText.setOrigin(0.5);
+
+        // the game has just started = we can spin the wheel
+        this.canSpin = true;
+
+        // waiting for your input, then calling "spinWheel" function
+        this.input.on("pointerdown", this.spinWheel, this);
+
+        //Add points
+        this.pointText = this.add.text(10,10,this.points+" points", {
+            font: "bold 25px Arial",
+            align: "center",
+            color: "white"
+        });
+
+    }
+
+    createWheel(){
         // starting degrees
         let startDegrees = -90;
 
@@ -225,27 +281,9 @@ export class WheelScene extends Phaser.Scene{
         this.wheelContainer.add(iconArray);
 
         // adding the pin in the middle of the canvas
-    
+
         this.pin = this.add.sprite(950, 300, "pin");
         this.pin.setScale(0.02,0.02);
-        //
-
-        // adding the text field
-        this.prizeText = this.add.text(400, 300, "Spin the wheel", {
-            font: "bold 32px Arial",
-            align: "center",
-            color: "white"
-        });
-
-        // center the text
-        this.prizeText.setOrigin(0.5);
-
-        // the game has just started = we can spin the wheel
-        this.canSpin = true;
-
-        // waiting for your input, then calling "spinWheel" function
-        this.input.on("pointerdown", this.spinWheel, this);
-
     }
 
     // function to spin the wheel
@@ -256,6 +294,12 @@ export class WheelScene extends Phaser.Scene{
 
             // resetting text field
             this.prizeText.setText("");
+            this.prizeDescText.setText("");
+            if(this.iconBig !== undefined)
+                this.iconBig.destroy();
+
+            redefineDegrees();
+            this.createWheel();
 
             // the wheel will spin round for some times. This is just coreography
             let rounds = Phaser.Math.Between(gameOptions.wheelRounds.min, gameOptions.wheelRounds.max);
@@ -318,12 +362,52 @@ export class WheelScene extends Phaser.Scene{
                         callbackScope: this,
                         onComplete: function(tween){
 
-                            // displaying prize text
-                            this.prizeText.setText(gameOptions.slices[prize].text);
                             
 
+                            // displaying prize text
+                            this.prizeText.setText(gameOptions.slices[prize].text);
+                            this.iconBig = this.add.sprite(1500,350 ,"icons", gameOptions.slices[prize].iconFrame);
+                            this.iconBig.setScale(3.5,3.5);
+
+                            switch(prize){
+                                case 0 : { // EARTH
+                                    console.log(0);
+                                    this.points += 100;
+                                    break;
+                                }
+                                case 1 : { // FAKE EARTH
+                                    console.log(1);
+                                    this.points -= 100;
+                                    break;
+                                }
+                                case 2 : { //OUT OF SOLAR SYSTEM
+                                    console.log(2);
+                                    this.points -= 50;
+                                    break;
+                                }
+                                case 3 : { //BLACKHOLE
+                                    console.log(3);
+                                    this.points /= 2;
+                                    break;
+                                }
+                                case 4 : { //MARS
+                                    console.log(4);
+                                    this.points *= 2;
+                                    break;
+                                }
+                                case 5 : { //SUN
+                                    console.log(5);
+                                    this.points += 50;
+                                    break;
+                                }
+                            }
+
+                            this.pointText.setText(this.points+" points");
+
+                            
                             // player can spin again
                             this.canSpin = true;
+
                         }
                     })
                 }
