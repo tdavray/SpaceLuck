@@ -1,9 +1,27 @@
+//// <reference path='./index.d.ts'/>
 import * as Phaser from 'phaser';
+import pinImage from '../public/spaceship.png';
+// import iconsImage from '../public/icons.png';
+// import spinSound from '../public/audio/bonus.wav';
+// import toArrayBuffer from 'to-array-buffer'
+
+// import WebpackLoader from 'phaser-webpack-loader';
+// import AssetManifest from '../AssetManifest';
 
 // the game itself
 let game ;
 
 let tabOfDegrees = [90,60,30,100,60,30];
+
+var audioJSON = {
+    spritemap: {
+        'glass': {
+            start: 1,
+            end: 2,
+            loop: false
+        }
+    }
+};
 
 function getRandomDegree(){
     
@@ -126,6 +144,11 @@ export class WheelScene extends Phaser.Scene{
     iconBig;
     points = 1000;
     pointText;
+    spinsLeft = 1;
+    spinsLeftText;
+    nameTextA;
+    nameTextB;
+    nameTextC;
 
     // constructor
     constructor(){
@@ -136,14 +159,32 @@ export class WheelScene extends Phaser.Scene{
     preload(){
 
         // loading pin image
-        this.load.image("pin", "https://i.imgur.com/K0BeHZQ.png");
-
+        //this.load.image("pin", "https://i.imgur.com/K0BeHZQ.png");
+        //this.load.image("pin", require('@/public/pin.png'));
+        //this.load.image('pin', 'public/pin.png');
+        this.textures.addBase64('pin', pinImage);
+        
         // loading icons spritesheet
         this.load.spritesheet("icons", "https://i.imgur.com/Xg6yPBS.png", {
             frameWidth: 200,
             frameHeight: 200
         });
 
+        /*var iconsImg = new Image();
+        iconsImg.onload = () => {
+            this.textures.addSpriteSheet('icons', iconsImg, { frameWidth: 200, frameHeight: 200 });
+        };
+        iconsImg.src = iconsImage;*/
+
+        //this.cache.json.add('sfx', audioJSON);
+
+        /*var audioCtx = new (window.AudioContext)();
+        audioCtx.decodeAudioData(toArrayBuffer(spinSound), (buffer) => {
+            this.cache.audio.add('sfx', buffer);
+        }, (e) => { console.log("Error with decoding audio data"); });*/
+
+
+        // this.load.scenePlugin('WebpackLoader', WebpackLoader, 'loader', 'loader');
     }
 
     // method to be executed once the scene has been created
@@ -157,7 +198,7 @@ export class WheelScene extends Phaser.Scene{
             align: "center",
             color: "white"
         });
-        this.prizeDescText = this.add.text(400, 370, "To get started !", {
+        this.prizeDescText = this.add.text(400, 370, "Click to spin !", {
             font: "bold 24px Arial",
             align: "center",
             color: "white"
@@ -167,6 +208,7 @@ export class WheelScene extends Phaser.Scene{
         this.prizeText.setOrigin(0.5);
         // center the text
         this.prizeDescText.setOrigin(0.5);
+        
 
         // the game has just started = we can spin the wheel
         this.canSpin = true;
@@ -180,6 +222,14 @@ export class WheelScene extends Phaser.Scene{
             align: "center",
             color: "white"
         });
+
+        this.spinsLeftText = this.add.text(10,45,this.spinsLeft+" spins left", {
+            font: "bold 25px Arial",
+            align: "center",
+            color: "white"
+        });
+
+        //this.sound.add('spin');
 
     }
 
@@ -292,6 +342,11 @@ export class WheelScene extends Phaser.Scene{
         // can we spin the wheel?
         if(this.canSpin){
 
+            this.spinsLeft -= 1;
+            this.spinsLeftText.setText(this.spinsLeft+" spins left");
+            //this.sound.play('spin');
+            //this.sound.playAudioSprite('spinsound', 'glass');
+
             // resetting text field
             this.prizeText.setText("");
             this.prizeDescText.setText("");
@@ -397,16 +452,56 @@ export class WheelScene extends Phaser.Scene{
                                 }
                                 case 5 : { //SUN
                                     console.log(5);
-                                    this.points += 50;
+                                    //this.points += 50;
+                                    this.spinsLeft += 2;
+                                    this.spinsLeftText.setText(this.spinsLeft+" spins left");
                                     break;
                                 }
                             }
 
                             this.pointText.setText(this.points+" points");
 
-                            
-                            // player can spin again
-                            this.canSpin = true;
+                            if(this.spinsLeft <= 0){
+                                this.prizeText.setText("It's the end of your interstellar trip !");
+                                this.prizeDescText.setText("Points : " + this.points);
+                                this.nameTextA = this.add.text(950,800,"_", {
+                                    font: "bold 25px Arial",
+                                    align: "center",
+                                    color: "white"
+                                });
+                                this.nameTextB = this.add.text(980,800,"_", {
+                                    font: "bold 25px Arial",
+                                    align: "center",
+                                    color: "white"
+                                });
+                                this.nameTextC = this.add.text(1010,800,"_", {
+                                    font: "bold 25px Arial",
+                                    align: "center",
+                                    color: "white"
+                                });
+                                this.input.keyboard.on('keydown', function(input) {
+                                    if( this.nameTextA.text === "_"){
+                                        this.nameTextA.setText(input.key);
+                                        return;
+                                    }
+                                    else if( this.nameTextB.text === "_"){
+                                        this.nameTextB.setText(input.key);
+                                        return;
+                                    }
+                                    else if( this.nameTextC.text === "_"){
+                                        this.nameTextC.setText(input.key);
+                                        return;
+                                    }
+                                    if(this.nameTextA.text != "_" && this.nameTextB.text != "_" && this.nameTextC.text != "_"){
+                                        console.log(input.key);
+                                    }
+                                    
+                                }, this)
+                            }
+                            else{
+                                // player can spin again
+                                this.canSpin = true;
+                            }
 
                         }
                     })

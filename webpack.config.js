@@ -16,10 +16,8 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          'file-loader'
-        ]
+        test: /\.(png|svg|jpg|gif|wav)$/,
+        use: [{ loader: 'url-loader' }]
       }
     ]
   },
@@ -27,7 +25,10 @@ module.exports = {
   devtool: 'inline-source-map',
 
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js'],
+    alias: {
+      assets: path.join(__dirname, './public')
+    }
   },
 
   output: {

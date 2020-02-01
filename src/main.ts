@@ -22,6 +22,9 @@ window.onload = function() {
             width: 1900,
             height: 900
         },
+        dom: {
+            createContainer: true
+        },
  
        // game background color
        backgroundColor: 0x000000,
