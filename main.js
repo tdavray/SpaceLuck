@@ -58,16 +58,33 @@ class MenuScene extends Phaser.Scene {
     var bg = this.add.sprite(0, 0, 'background')
     bg.setOrigin(0, 0)
 
-    var text = this.add.text(950, 200, 'To infinity... and beyond!', {
+    var title = this.add.text(950, 200, 'To infinity... and beyond!', {
+      font: 'bold 32px Arial',
+      align: 'center',
+      color: 'white'
+    })
+    var textHS
+    console.log(scoreJson.scores.length)
+    if(!scoreJson.scores.length){
+      textHS = "No scores yet"
+    }
+    else{
+      scoreJson.scores.forEach(function(score){
+        textHS += score.letter1 + score.letter2 + score.letter3
+        
+      })
+    }
+    
+    var highScores = this.add.text(1400, 200, textHS, {
       font: 'bold 32px Arial',
       align: 'center',
       color: 'white'
     })
 
     // center the text
-    text.setOrigin(0.5)
-    text.setInteractive({ useHandCursor: true })
-    text.on('pointerdown', () => this.clickButton())
+    title.setOrigin(0.5)
+    title.setInteractive({ useHandCursor: true })
+    title.on('pointerdown', () => this.clickButton())
   }
 
   clickButton () {
