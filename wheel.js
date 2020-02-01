@@ -1,15 +1,4 @@
-/// / <reference path='./index.d.ts'/>
-import * as Phaser from 'phaser'
-import pinImage from '../public/spaceship.png'
-// import iconsImage from '../public/icons.png';
-// import spinSound from '../public/audio/bonus.wav';
-// import toArrayBuffer from 'to-array-buffer'
 
-// import WebpackLoader from 'phaser-webpack-loader';
-// import AssetManifest from '../AssetManifest';
-
-// the game itself
-let game
 
 let tabOfDegrees = [90, 60, 30, 100, 60, 30]
 
