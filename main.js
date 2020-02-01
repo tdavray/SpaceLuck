@@ -5,6 +5,10 @@ let game
 let spinsLeft = 1
 let points = 1000
 
+let scoreJson = {
+   scores: []
+};
+
 // once the window loads...
 window.onload = function () {
   // game configuration object
@@ -522,7 +526,18 @@ class WheelScene extends Phaser.Scene {
                     return
                   }
                   if (this.nameTextA.text !== '_' && this.nameTextB.text !== '_' && this.nameTextC.text !== '_' && input.key === 'Enter') {
-                    
+                    scoreJson.scores.push({letter1: this.nameTextA.text, letter2: this.nameTextB.text, letter3: this.nameTextC.text, score:points});
+                    console.log(scoreJson)
+                    /*var fs = require('fs');
+                    fs.readFile('assets/scores.json', 'utf8', function readFileCallback(err, data){
+                        if (err){
+                            console.log(err);
+                        } else {
+                          var obj = JSON.parse(data);
+                          obj.scores.push({letter1: this.nameTextA.text, letter2: this.nameTextB.text, letter3: this.nameTextC.text, score:points});
+                          var json = JSON.stringify(obj); 
+                          fs.writeFile('assets/scores.json', json, 'utf8'); // write it back 
+                    }});*/
                     this.scene.start('MenuScene')
                   }
                 }, this)
