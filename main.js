@@ -2,6 +2,8 @@
 
 // the game itself
 let game
+let spinsLeft = 1
+let points = 1000
 
 // once the window loads...
 window.onload = function () {
@@ -65,6 +67,8 @@ class MenuScene extends Phaser.Scene {
   }
 
   clickButton () {
+    spinsLeft = 1
+    points = 1000
     this.scene.start('WheelScene')
   }
 }
@@ -192,21 +196,6 @@ const gameOptions = {
   strokeWidth: 5
 }
 
-  let allowedDegrees
-  let wheelContainer
-  let pin
-  let prizeText
-  let prizeDescText
-  let canSpin
-  let iconBig
-  let points = 1000
-  let pointText
-  let spinsLeft = 1
-  let spinsLeftText
-  let nameTextA
-  let nameTextB
-  let nameTextC
-
 // Wheel scene
 class WheelScene extends Phaser.Scene {
 
@@ -219,10 +208,7 @@ class WheelScene extends Phaser.Scene {
   // method to be executed when the scene preloads
   preload () {
     // loading pin image
-    // this.load.image("pin", "https://i.imgur.com/K0BeHZQ.png");
-    // this.load.image("pin", require('@/public/pin.png'));
-    // this.load.image('pin', 'public/pin.png');
-    this.textures.addBase64('pin', '/assets/spaceship.png')
+    this.load.image('pin', '/assets/spaceship.png')
 
     // loading icons spritesheet
     this.load.spritesheet('icons', 'https://i.imgur.com/Xg6yPBS.png', {
@@ -280,7 +266,7 @@ class WheelScene extends Phaser.Scene {
       color: 'white'
     })
 
-    this.spinsLeftText = this.add.text(10, 45, this.spinsLeft + ' spins left', {
+    this.spinsLeftText = this.add.text(10, 45, spinsLeft + ' spins left', {
       font: 'bold 25px Arial',
       align: 'center',
       color: 'white'
@@ -391,8 +377,8 @@ class WheelScene extends Phaser.Scene {
   spinWheel () {
     // can we spin the wheel?
     if (this.canSpin) {
-      this.spinsLeft -= 1
-      this.spinsLeftText.setText(this.spinsLeft + ' spins left')
+      spinsLeft -= 1
+      this.spinsLeftText.setText(spinsLeft + ' spins left')
       // this.sound.play('spin');
       // this.sound.playAudioSprite('spinsound', 'glass');
 
@@ -498,16 +484,15 @@ class WheelScene extends Phaser.Scene {
                 }
                 case 5 : { // SUN
                   console.log(5)
-                  // this.points += 50;
-                  this.spinsLeft += 2
-                  this.spinsLeftText.setText(this.spinsLeft + ' spins left')
+                  spinsLeft += 2
+                  this.spinsLeftText.setText(spinsLeft + ' spins left')
                   break
                 }
               }
 
               this.pointText.setText(points + ' points')
 
-              if (this.spinsLeft <= 0) {
+              if (spinsLeft <= 0) {
                 this.prizeText.setText("It's the end of your interstellar trip !")
                 this.prizeDescText.setText('Points : ' + points)
                 this.nameTextA = this.add.text(950, 800, '_', {
@@ -536,8 +521,9 @@ class WheelScene extends Phaser.Scene {
                     this.nameTextC.setText(input.key)
                     return
                   }
-                  if (this.nameTextA.text !== '_' && this.nameTextB.text !== '_' && this.nameTextC.text !== '_') {
-                    console.log(input.key)
+                  if (this.nameTextA.text !== '_' && this.nameTextB.text !== '_' && this.nameTextC.text !== '_' && input.key === 'Enter') {
+                    
+                    this.scene.start('MenuScene')
                   }
                 }, this)
               } else {
