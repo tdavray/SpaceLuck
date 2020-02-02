@@ -61,17 +61,30 @@ class MenuScene extends Phaser.Scene {
     var bg = this.add.image(400, 450, 'background')
     //bg.setOrigin(0, 0)
     bg.setScale(0.17,0.17)
-    
-    var play = this.add.image(950,600,'play');
-    play.setScale(0.1,0.1)
 
     var title = this.add.text(950, 200, 'Space Luck', {
       font: 'bold 60px Arial',
       align: 'center',
       color: 'white'
-    })
+    }) 
+    // center the text
+    title.setOrigin(0.5)
+    var soundtxt = 'Activate sound'
+    if(sound === true){
+      soundtxt = 'Desactivate sound'
+    }
+    this.soundText = this.add.text(950, 400, soundtxt, {
+      font: 'bold 40px Arial',
+      align: 'center',
+      color: 'white'
+    }) 
+    this.soundText.setInteractive({ useHandCursor: true })
+    this.soundText.on('pointerdown', () => this.clickSound())
+    
+    // center the text
+    this.soundText.setOrigin(0.5)
+    
     var textHS = ""
-    console.log(scoreJson.scores)
     if(!scoreJson.scores.length){
       textHS = "No scores yet"
     }
@@ -89,16 +102,25 @@ class MenuScene extends Phaser.Scene {
       color: 'white'
     })
 
-    // center the text
-    title.setOrigin(0.5)
+    var play = this.add.image(950,600,'play');
+    play.setScale(0.1,0.1)
     play.setInteractive({ useHandCursor: true })
-    play.on('pointerdown', () => this.clickButton())
+    play.on('pointerdown', () => this.clickStart())
   }
 
-  clickButton () {
+  clickStart () {
     spinsLeft = 5
     points = 1000
     this.scene.start('WheelScene')
+  }
+  
+  clickSound () {
+    sound = !sound
+    var soundtxt = 'Activate sound'
+    if(sound === true){
+      soundtxt = 'Desactivate sound'
+    }
+    this.soundText.setText(soundtxt)
   }
 }
 
@@ -295,8 +317,32 @@ class WheelScene extends Phaser.Scene {
       align: 'center',
       color: 'white'
     })
+    
+    var soundtxt = 'Activate sound'
+    if(sound === true){
+      soundtxt = 'Desactivate sound'
+    }
+    this.soundText = this.add.text(1600, 100, soundtxt, {
+      font: 'bold 20px Arial',
+      align: 'center',
+      color: 'white'
+    }) 
+    this.soundText.setInteractive({ useHandCursor: true })
+    this.soundText.on('pointerdown', () => this.clickSound())
+    
+    // center the text
+    this.soundText.setOrigin(0.5)
 
     // this.sound.add('spin');
+  }
+  
+  clickSound () {
+    sound = !sound
+    var soundtxt = 'Activate sound'
+    if(sound === true){
+      soundtxt = 'Desactivate sound'
+    }
+    this.soundText.setText(soundtxt)
   }
 
   createWheel () {
@@ -403,8 +449,9 @@ class WheelScene extends Phaser.Scene {
     if (this.canSpin) {
       spinsLeft -= 1
       this.spinsLeftText.setText(spinsLeft + ' spins left')
-      this.sound.play('spinsound');
-      // this.sound.playAudioSprite('spinsound', 'glass');
+      if(sound === true){
+        this.sound.play('spinsound');
+      }
 
       // resetting text field
       this.prizeText.setText('')
@@ -478,27 +525,35 @@ class WheelScene extends Phaser.Scene {
 
               switch (prize) {
                 case 0 : { // EARTH
-                  this.sound.play('earthsound');
+                  if(sound === true){
+                    this.sound.play('earthsound');
+                  }
                   points += 100
                   console.log(points)
                   break
                 }
                 case 1 : { // FAKE EARTH
-                  this.sound.play('fakeearthsound');
+                  if(sound === true){
+                    this.sound.play('fakeearthsound');
+                  }
                   console.log(1)
                   points -= 100
                   console.log(points)
                   break
                 }
                 case 2 : { // OUT OF SOLAR SYSTEM
-                  this.sound.play('outsound');
+                  if(sound === true){
+                    this.sound.play('outsound');
+                  }
                   console.log(2)
                   points -= 50
                   console.log(points)
                   break
                 }
                 case 3 : { // BLACKHOLE
-                  this.sound.play('blackholesound');
+                  if(sound === true){
+                    this.sound.play('blackholesound');
+                  }
                   this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
                   let count;
                   if (this.spaceKey.isDown)
@@ -509,14 +564,18 @@ class WheelScene extends Phaser.Scene {
                   break
                 }
                 case 4 : { // MARS
-                  this.sound.play('marssound');
+                  if(sound === true){
+                    this.sound.play('marssound');
+                  }
                   console.log(4)
                   points *= 2
                   console.log(points)
                   break
                 }
                 case 5 : { // SUN
-                  this.sound.play('sunsound');
+                  if(sound === true){
+                    this.sound.play('sunsound');
+                  }
                   console.log(5)
                   spinsLeft += 2
                   this.spinsLeftText.setText(spinsLeft + ' spins left')
