@@ -318,11 +318,11 @@ class WheelScene extends Phaser.Scene {
       color: 'white'
     })
     
-    var soundtxt = 'Activate sound'
+    var soundtxt = 'Press "A" to Activate sound'
     if(sound === true){
-      soundtxt = 'Desactivate sound'
+      soundtxt = 'Press "A" to Desactivate sound'
     }
-    this.soundText = this.add.text(1600, 100, soundtxt, {
+    this.soundText = this.add.text(1600, 20, soundtxt, {
       font: 'bold 20px Arial',
       align: 'center',
       color: 'white'
@@ -335,9 +335,9 @@ class WheelScene extends Phaser.Scene {
       if (input.key === 'a' && spinsLeft > 0) {
         console.log("trigger")
         sound = !sound
-        var soundtxt = 'Activate sound'
+        var soundtxt = 'Press "A" to Activate sound'
         if(sound === true){
-          soundtxt = 'Desactivate sound'
+          soundtxt = 'Press "A" to Desactivate sound'
         }
         console.log(this.scene)
         this.scene.soundText.setText(soundtxt)
@@ -566,6 +566,10 @@ class WheelScene extends Phaser.Scene {
                   if(sound === true){
                     this.sound.play('blackholesound');
                   }
+                  let current = true
+                  let count = 20;
+                  this.input.on('pointerdown', count--, this)
+                  
                   //this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
                   /*let count;
                   if (this.spaceKey.isDown)
