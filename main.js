@@ -5,6 +5,7 @@ let game
 let spinsLeft
 let points
 let sound = true
+let buyFuel = false
 
 let scoreJson = {
    scores: []
@@ -459,6 +460,7 @@ class WheelScene extends Phaser.Scene {
   spinWheel () {
     // can we spin the wheel?
     if (this.canSpin) {
+      buyFuel = false
       spinsLeft -= 1
       this.spinsLeftText.setText(spinsLeft + ' spins left')
       if(sound === true){
@@ -541,6 +543,18 @@ class WheelScene extends Phaser.Scene {
                     this.sound.play('earthsound');
                   }
                   points += 100
+                  this.prizeDescText.setText('Home sweet home...\nThe spaceport offer your some fuel (+2 spins)\nDo you want to buy even more ?\n200points = 1 fuel\n (buy using "B")')
+                  buyFuel = true
+                  this.input.keyboard.on('keydown', function (input) {
+                    console.log(input.key)
+                    if (input.key === 'b' && buyFuel && points > 300) {
+                      points -= 300
+                      spinsLeft += 1
+                      this.scene.pointText.setText(points + ' points')
+                      this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+                      return
+                    }
+                  })
                   console.log(points)
                   break
                 }
@@ -643,7 +657,6 @@ class WheelScene extends Phaser.Scene {
                   }
                   if (this.nameTextA.text !== '_' && this.nameTextB.text !== '_' && this.nameTextC.text !== '_' && input.key === 'Enter') {
                     scoreJson.scores.push({letter1: this.nameTextA.text, letter2: this.nameTextB.text, letter3: this.nameTextC.text, score:points});
-                    console.log(scoreJson)
                     this.scene.start('MenuScene')
                   }
                 }, this)
