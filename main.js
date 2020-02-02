@@ -2,7 +2,7 @@
 
 // the game itself
 let game
-let spinsLeft = 1
+let spinsLeft = 5
 let points = 1000
 
 let scoreJson = {
@@ -89,7 +89,7 @@ class MenuScene extends Phaser.Scene {
   }
 
   clickButton () {
-    spinsLeft = 1
+    spinsLeft = 5
     points = 1000
     this.scene.start('WheelScene')
   }
@@ -243,7 +243,7 @@ class WheelScene extends Phaser.Scene {
     this.load.audio('sunsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FPower-Up.mp3?v=1580651261079")
     this.load.audio('blackholesound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FRed%20Alert.mp3?v=1580651528413")
     this.load.audio('earthsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FCity_Centre.mp3?v=1580651716774")
-    this.load.audio('marssound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FCity_Centre.mp3?v=1580651716774")
+    this.load.audio('marssound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FChamber%20Decompressing.mp3?v=1580651975910")
     this.load.audio('outsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FTime%20Warp.mp3?v=1580651368971")
   }
 
