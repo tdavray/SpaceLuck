@@ -2,8 +2,9 @@
 
 // the game itself
 let game
-let spinsLeft = 5
-let points = 1000
+let spinsLeft
+let points
+let sound = true
 
 let scoreJson = {
    scores: []
@@ -51,7 +52,7 @@ class MenuScene extends Phaser.Scene {
   }
 
   preload () {
-    this.load.image('background', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FFree-space-backgrounds.jpg?v=1580653199804')
+    this.load.image('background', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship.png?v=1580653230507')
     
     this.load.image('play', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fplay.png?v=1580653667696')
   }
@@ -242,6 +243,8 @@ class WheelScene extends Phaser.Scene {
       frameWidth: 200,
       frameHeight: 200
     })
+    
+    this.load.image('play', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fplay.png?v=1580653667696')
 
     this.load.audio('spinsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fbonus.wav?v=1580653257764")
     this.load.audio('fakeearthsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FAppear.mp3?v=1580651020366")
