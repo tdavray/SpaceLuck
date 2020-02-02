@@ -92,9 +92,10 @@ class MenuScene extends Phaser.Scene {
       textHS = "No scores yet"
     }
     else{
+      scoreJson.scores.sort(this.compare);
       scoreJson.scores.forEach(function(score){
         if(score)
-          textHS += score.letter1 + score.letter2 + score.letter3 + "  :  " + score.score + "points\n"
+          textHS += score.letter1 + score.letter2 + score.letter3 + "  :  " + score.score + " points\n"
         
       })
     }
@@ -112,7 +113,7 @@ class MenuScene extends Phaser.Scene {
   }
 
   clickStart () {
-    spinsLeft = 5
+    spinsLeft = 1
     points = 1000
     this.scene.start('WheelScene')
   }
@@ -125,6 +126,20 @@ class MenuScene extends Phaser.Scene {
     }
     this.soundText.setText(soundtxt)
   }
+  
+  compare(a, b) {
+    // Use toUpperCase() to ignore character casing
+    const scoreA = a.score;
+    const scoreB = b.score;
+
+    let comparison = 0;
+    if (scoreA > scoreB) {
+      comparison = -1;
+    } else if (scoreA < scoreB) {
+      comparison = 1;
+    }
+    return comparison;
+}
 }
 
 
@@ -517,7 +532,7 @@ class WheelScene extends Phaser.Scene {
   // function to spin the wheel
   spinWheel () {
     // can we spin the wheel?
-    if (this.canSpin && spinsLeft >= 0) {
+    if (this.canSpin && spinsLeft > 0) {
       buyFuelHuman = false
       buyFuelMarket = false
       ovniChoice = false
@@ -604,6 +619,8 @@ class WheelScene extends Phaser.Scene {
                   }
                   this.prizeDescText.setText('Home sweet home...\nThe spaceport offer your some fuel (+2 spins)\nDo you want to buy even more ?\n300points = 1 fuel\n (buy using "B")')
                   buyFuelHuman = true
+                  spinsLeft += 2
+                  this.spinsLeftText.setText(spinsLeft + ' spins left')
                   this.canSpin = true
                   break
                 }
@@ -625,21 +642,21 @@ class WheelScene extends Phaser.Scene {
                   switch(rand){
                     case 0 :{
                       this.prizeDescText.setText('You find some pretty agressive alien ships !\nBut your ship is better.\n You destroy them and scrap some ressources\n(+500 points)')
-                      this.points += 500
+                      points += 500
                       this.pointText.setText(points + ' points')
                       break
                     }
                     case 1 :{
                       this.prizeDescText.setText('You find some pretty agressive alien ships !\nThey are too strong for you.\n You flee, using a lot of fuel\n(-1 spin)')
-                      if(this.spinsLeft > 0)
-                        this.spinsLeft -= 1
+                      if(spinsLeft > 0)
+                        spinsLeft -= 1
                       this.spinsLeftText.setText(spinsLeft + ' spins left')
                       break
                     }
                     case 2 :{
                       this.prizeDescText.setText('You find a really frendly alien ship.\n"Take this human"\n "it will be more useful to you".\n(+1 spin and + 250 points)')
-                      this.points += 250
-                      this.spinsLeft += 1
+                      points += 250
+                      spinsLeft += 1
                       this.pointText.setText(points + ' points')
                       this.spinsLeftText.setText(spinsLeft + ' spins left')
                       break
@@ -686,7 +703,7 @@ class WheelScene extends Phaser.Scene {
         }
       })
     }
-    if (this.canSpin && spinsLeft < 0) {
+    if (this.canSpin && spinsLeft <= 0) {
                 this.prizeText.setText("It's the end of your interstellar trip !")
                 this.prizeDescText.setText('Points : ' + points)
                 this.nameTextA = this.add.text(950, 800, '_', {
