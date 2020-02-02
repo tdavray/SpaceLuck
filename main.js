@@ -6,6 +6,8 @@ let spinsLeft
 let points
 let sound = true
 let buyFuel = false
+let ovniChoice = false
+let turnOver = false
 
 let scoreJson = {
    scores: []
@@ -289,7 +291,7 @@ class WheelScene extends Phaser.Scene {
       align: 'center',
       color: 'white'
     })
-    this.prizeDescText = this.add.text(400, 370, 'Click to spin !', {
+    this.prizeDescText = this.add.text(400, 390, 'Click to spin !', {
       font: 'bold 24px Arial',
       align: 'center',
       color: 'white'
@@ -461,6 +463,7 @@ class WheelScene extends Phaser.Scene {
     // can we spin the wheel?
     if (this.canSpin) {
       buyFuel = false
+      ovniChoice = false
       spinsLeft -= 1
       this.spinsLeftText.setText(spinsLeft + ' spins left')
       if(sound === true){
@@ -542,11 +545,9 @@ class WheelScene extends Phaser.Scene {
                   if(sound === true){
                     this.sound.play('earthsound');
                   }
-                  points += 100
                   this.prizeDescText.setText('Home sweet home...\nThe spaceport offer your some fuel (+2 spins)\nDo you want to buy even more ?\n200points = 1 fuel\n (buy using "B")')
                   buyFuel = true
                   this.input.keyboard.on('keydown', function (input) {
-                    console.log(input.key)
                     if (input.key === 'b' && buyFuel && points > 300) {
                       points -= 300
                       spinsLeft += 1
@@ -555,69 +556,52 @@ class WheelScene extends Phaser.Scene {
                       return
                     }
                   })
-                  console.log(points)
+                  turnOver = true
                   break
                 }
                 case 1 : { //  OVNI
                   if(sound === true){
                     this.sound.play('ovnisound');
                   }
-                  console.log(1)
-                  points -= 100
-                  console.log(points)
+                  this.prizeDescText.setText('Should we be scared?\nYou hear a strange voice whisper "FUEL OR RESSOURCES?"\n(F for Fuel, R for ressources)')
+                  ovniChoice = true
+                  this.input.keyboard.on('keydown', function (input) {
+                    if (input.key === 'f' && ovniChoice) {
+                      spinsLeft -= 1
+                      
+                      this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+                      return
+                    }
+                  })
+                  turnOver = true
                   break
                 }
                 case 2 : { // OUT OF SOLAR SYSTEM
                   if(sound === true){
                     this.sound.play('outsound');
                   }
-                  console.log(2)
-                  points -= 50
-                  console.log(points)
+                  turnOver = true
                   break
                 }
                 case 3 : { // BLACKHOLE
                   if(sound === true){
                     this.sound.play('blackholesound');
                   }
-                  /*let timeleft = true
-                  let count = 20;
-                  let timer = game.time.create(false);
-                  timer.loop(2000, function(){
-                    timeleft = false
-                  }, this);
-                  timer.start();
-                  while(count > 0 && timeleft){
-                    console.log("count")
-                    this.input.on('pointerdown', function(pointer){
-                      count--
-                      console.log(count)
-                   });
-                  }*/
-                  
-                  //this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
-                  /*let count;
-                  if (this.spaceKey.isDown)
-                  {
-                    
-                  }*/
-                  points /= 2
+                  turnOver = true
                   break
                 }
                 case 4 : { // MARS
                   if(sound === true){
                     this.sound.play('marssound');
                   }
-                  console.log(4)
-                  points *= 2
-                  console.log(points)
+                  turnOver = true
                   break
                 }
                 case 5 : { // SUN
                   if(sound === true){
                     this.sound.play('sunsound');
                   }
-                  console.log(5)
+                  turnOver = true
                   spinsLeft += 2
                   this.spinsLeftText.setText(spinsLeft + ' spins left')
                   break
@@ -661,8 +645,8 @@ class WheelScene extends Phaser.Scene {
                   }
                 }, this)
               } else {
-                // player can spin again
-                this.canSpin = true
+                if(turnOver)
+                  this.canSpin = true
               }
             }
           })
