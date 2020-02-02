@@ -58,14 +58,15 @@ class MenuScene extends Phaser.Scene {
   }
 
   create () {
-    var bg = this.add.sprite(0, 0, 'background')
-    bg.setOrigin(0, 0)
+    var bg = this.add.image(400, 450, 'background')
+    //bg.setOrigin(0, 0)
+    bg.setScale(0.17,0.17)
     
     var play = this.add.image(950,600,'play');
     play.setScale(0.1,0.1)
 
-    var title = this.add.text(950, 200, 'To infinity... and beyond!', {
-      font: 'bold 32px Arial',
+    var title = this.add.text(950, 200, 'Space Luck', {
+      font: 'bold 60px Arial',
       align: 'center',
       color: 'white'
     })
@@ -498,9 +499,13 @@ class WheelScene extends Phaser.Scene {
                 }
                 case 3 : { // BLACKHOLE
                   this.sound.play('blackholesound');
-                  console.log(3)
+                  this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+                  let count;
+                  if (this.spaceKey.isDown)
+                  {
+                    
+                  }
                   points /= 2
-                  console.log(points)
                   break
                 }
                 case 4 : { // MARS
