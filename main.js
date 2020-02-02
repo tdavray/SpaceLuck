@@ -330,27 +330,20 @@ class WheelScene extends Phaser.Scene {
     
     // center the text
     this.soundText.setOrigin(0.5)
-    //this.soundkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-    //this.soundkey.onDown.add(this.switchSound, this);
-    /*this.input.keyboard.on('keydown_ONE', function (event) {
-      console.log("trigger")
-      sound = !sound
-      var soundtxt = 'Activate sound'
-      if(sound === true){
-        soundtxt = 'Desactivate sound'
-      }
-      this.soundText.setText(soundtxt)
-    });*/
-    this.BKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B);
     
     this.input.keyboard.on('keydown', function (input) {
-      if (this.nameTextA.text === '_') {
-        this.nameTextA.setText(input.key)
-        return
+      if (input.key === 'a' && spinsLeft > 0) {
+        console.log("trigger")
+        sound = !sound
+        var soundtxt = 'Activate sound'
+        if(sound === true){
+          soundtxt = 'Desactivate sound'
+        }
+        console.log(this.scene)
+        this.scene.soundText.setText(soundtxt)
       }
     })
 
-    // this.sound.add('spin');
   }
   
   
@@ -573,12 +566,12 @@ class WheelScene extends Phaser.Scene {
                   if(sound === true){
                     this.sound.play('blackholesound');
                   }
-                  this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
-                  let count;
+                  //this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+                  /*let count;
                   if (this.spaceKey.isDown)
                   {
                     
-                  }
+                  }*/
                   points /= 2
                   break
                 }
