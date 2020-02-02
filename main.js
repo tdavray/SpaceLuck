@@ -465,6 +465,7 @@ class WheelScene extends Phaser.Scene {
       buyFuel = false
       ovniChoice = false
       spinsLeft -= 1
+      turnOver = false
       this.spinsLeftText.setText(spinsLeft + ' spins left')
       if(sound === true){
         this.sound.play('spinsound');
@@ -556,52 +557,61 @@ class WheelScene extends Phaser.Scene {
                       return
                     }
                   })
-                  turnOver = true
+                  this.scene.canSpin = true
                   break
                 }
                 case 1 : { //  OVNI
                   if(sound === true){
                     this.sound.play('ovnisound');
                   }
-                  this.prizeDescText.setText('Should we be scared?\nYou hear a strange voice whisper "FUEL OR RESSOURCES?"\n(F for Fuel, R for ressources)')
+                  this.prizeDescText.setText('Should we be scared?\nYou hear a strange voice whisper : \n"FUEL OR RESSOURCES?"\n(F for Fuel, R for ressources)')
                   ovniChoice = true
                   this.input.keyboard.on('keydown', function (input) {
                     if (input.key === 'f' && ovniChoice) {
                       spinsLeft -= 1
-                      
+                      this.scene.prizeDescText.setText('The OVNI desepear,\n but with some of your fuel... (-1 spin)')
                       this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+                      this.scene.canSpin = true
+                      return
+                    }
+                    if (input.key === 'r' && ovniChoice) {
+                      points -= 300
+                      this.scene.prizeDescText.setText('The OVNI desepear,\n but also did some of your ressources... (-300 points)')
+                      this.scene.pointText.setText(points + ' points')
+                      this.scene.canSpin = true
+                      console.log(turnOver)
                       return
                     }
                   })
-                  turnOver = true
+                  //turnOver = true
                   break
                 }
                 case 2 : { // OUT OF SOLAR SYSTEM
                   if(sound === true){
                     this.sound.play('outsound');
                   }
-                  turnOver = true
+                  this.scene.canSpin = true
                   break
                 }
                 case 3 : { // BLACKHOLE
                   if(sound === true){
                     this.sound.play('blackholesound');
                   }
-                  turnOver = true
+                  this.scene.canSpin = true
                   break
                 }
                 case 4 : { // MARS
                   if(sound === true){
                     this.sound.play('marssound');
                   }
-                  turnOver = true
+                  this.scene.canSpin = true
                   break
                 }
                 case 5 : { // SUN
                   if(sound === true){
                     this.sound.play('sunsound');
                   }
-                  turnOver = true
+                  this.scene.canSpin = true
                   spinsLeft += 2
                   this.spinsLeftText.setText(spinsLeft + ' spins left')
                   break
@@ -644,9 +654,6 @@ class WheelScene extends Phaser.Scene {
                     this.scene.start('MenuScene')
                   }
                 }, this)
-              } else {
-                if(turnOver)
-                  this.canSpin = true
               }
             }
           })
