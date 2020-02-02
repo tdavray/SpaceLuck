@@ -113,7 +113,7 @@ class MenuScene extends Phaser.Scene {
   }
 
   clickStart () {
-    spinsLeft = 1
+    spinsLeft = 5
     points = 1000
     this.scene.start('WheelScene')
   }
@@ -351,6 +351,7 @@ class WheelScene extends Phaser.Scene {
     
     
     this.input.keyboard.on('keydown', function (input) {
+      
       //SOUND SWITCH
       if (input.key === 'a' && spinsLeft > 0) {
         console.log("trigger")
@@ -416,8 +417,10 @@ class WheelScene extends Phaser.Scene {
         return
       }
     })
-    
-
+  }
+  
+  removePoints(qtypoints){
+    if()
   }
   
   
@@ -673,6 +676,31 @@ class WheelScene extends Phaser.Scene {
                 case 3 : { // BLACKHOLE
                   if(sound === true){
                     this.sound.play('blackholesound');
+                  }
+                  const rand = Math.floor(Math.random() * Math.floor(3))
+                  switch(rand){
+                    case 0 :{
+                      this.prizeDescText.setText('You got a little bit too close of a blackhole\nYou had to eject some ressources to lighten your ship(-100 points)')
+                      if(points < 100)
+                        points = 0
+                      points -= 100
+                      this.pointText.setText(points + ' points')
+                      break
+                    }
+                    case 1 :{
+                      this.prizeDescText.setText('You got too close of a blackhole!\nYou had to eject some ressources to lighten your ship\nYou also used a lot of fuel(-150 points and -1 spin)')
+                      if(spinsLeft > 0)
+                        spinsLeft -= 1
+                      this.spinsLeftText.setText(spinsLeft + ' spins left')
+                      break
+                    }
+                    case 1 :{
+                      this.prizeDescText.setText('You got way too close of a blackhole!!!\nYou had to eject a lot ressources to lighten your ship\nYou also used a lot of fuel(-300 points and -1 spin)')
+                      if(spinsLeft > 0)
+                        spinsLeft -= 1
+                      this.spinsLeftText.setText(spinsLeft + ' spins left')
+                      break
+                    }
                   }
                   this.canSpin = true
                   break
