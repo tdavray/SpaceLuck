@@ -366,7 +366,7 @@ class WheelScene extends Phaser.Scene {
       
       //EARTH EVENT
       if (input.key === 'b' && buyFuelHuman && points > 300) {
-        points -= 300
+        this.scene.removePoints(300)
         spinsLeft += 1
         this.scene.pointText.setText(points + ' points')
         this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
@@ -377,14 +377,11 @@ class WheelScene extends Phaser.Scene {
       if (input.key === 'f' && ovniChoice) {
         if(spinsLeft < 1){
           this.scene.prizeDescText.setText('The OVNI desepear,\n You had no fuel, so it took ressources... (-300 points)')
-          if(points < 300)
-            points = 0
-          else
-            points -= 300
+            this.scene.removePoints(300)
           this.scene.pointText.setText(points + ' points')
         }
         else{
-          spinsLeft -= 1
+          this.scene.removeSpins(1)
           this.scene.prizeDescText.setText('The OVNI desepear,\n but with some of your fuel... (-1 spin)')
           this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
         }
@@ -394,12 +391,11 @@ class WheelScene extends Phaser.Scene {
       if (input.key === 'r' && ovniChoice) {
         if(points < 300){
           this.scene.prizeDescText.setText('The OVNI desepear,\n You had not enough ressources, so it took fuel... (-1 spin)')
-          if(spinsLeft > 0)
-            spinsLeft -= 1
+          this.scene.removeSpins(1)
           this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
         }
         else{
-          points -= 300
+          this.scene.removePoints(300)
           this.scene.prizeDescText.setText('The OVNI desepear,\n but also did some of your ressources... (-300 points)')
           this.scene.pointText.setText(points + ' points')
         }
@@ -410,7 +406,7 @@ class WheelScene extends Phaser.Scene {
       
       //MARKET EVENT (OUT OF SOLAR SYSTEM)
       if (input.key === 'b' && buyFuelMarket && points > 150) {
-        points -= 150
+        this.scene.removePoints(150)
         spinsLeft += 1
         this.scene.pointText.setText(points + ' points')
         this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
@@ -420,7 +416,17 @@ class WheelScene extends Phaser.Scene {
   }
   
   removePoints(qtypoints){
-    if()
+    if(points < qtypoints)
+      points = 0
+    else
+      points -= qtypoints
+  }
+  
+  removeSpins(qtyspins){
+    if(spinsLeft < qtyspins)
+      spinsLeft = 0
+    else
+      spinsLeft -= qtyspins
   }
   
   
@@ -651,8 +657,7 @@ class WheelScene extends Phaser.Scene {
                     }
                     case 1 :{
                       this.prizeDescText.setText('You find some pretty agressive alien ships !\nThey are too strong for you.\n You flee, using a lot of fuel\n(-1 spin)')
-                      if(spinsLeft > 0)
-                        spinsLeft -= 1
+                      this.removeSpins(1)
                       this.spinsLeftText.setText(spinsLeft + ' spins left')
                       break
                     }
@@ -681,23 +686,21 @@ class WheelScene extends Phaser.Scene {
                   switch(rand){
                     case 0 :{
                       this.prizeDescText.setText('You got a little bit too close of a blackhole\nYou had to eject some ressources to lighten your ship(-100 points)')
-                      if(points < 100)
-                        points = 0
-                      points -= 100
+                      this.removePoints(100)
                       this.pointText.setText(points + ' points')
                       break
                     }
                     case 1 :{
                       this.prizeDescText.setText('You got too close of a blackhole!\nYou had to eject some ressources to lighten your ship\nYou also used a lot of fuel(-150 points and -1 spin)')
-                      if(spinsLeft > 0)
-                        spinsLeft -= 1
+                      this.removePoints(150)
+                      this.removeSpins(1)
                       this.spinsLeftText.setText(spinsLeft + ' spins left')
                       break
                     }
-                    case 1 :{
+                    case 2 :{
                       this.prizeDescText.setText('You got way too close of a blackhole!!!\nYou had to eject a lot ressources to lighten your ship\nYou also used a lot of fuel(-300 points and -1 spin)')
-                      if(spinsLeft > 0)
-                        spinsLeft -= 1
+                      this.removePoints(300)
+                      this.removeSpins(1)
                       this.spinsLeftText.setText(spinsLeft + ' spins left')
                       break
                     }
