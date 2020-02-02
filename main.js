@@ -51,12 +51,17 @@ class MenuScene extends Phaser.Scene {
   }
 
   preload () {
-    this.load.image('background', 'https://i.imgur.com/P2tQgxm.jpg')
+    this.load.image('background', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FFree-space-backgrounds.jpg?v=1580653199804')
+    
+    this.load.image('play', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fplay.png?v=1580653667696')
   }
 
   create () {
     var bg = this.add.sprite(0, 0, 'background')
     bg.setOrigin(0, 0)
+    
+    var play = this.add.image(950,600,'play');
+    play.setScale(0.1,0.1)
 
     var title = this.add.text(950, 200, 'To infinity... and beyond!', {
       font: 'bold 32px Arial',
@@ -84,8 +89,8 @@ class MenuScene extends Phaser.Scene {
 
     // center the text
     title.setOrigin(0.5)
-    title.setInteractive({ useHandCursor: true })
-    title.on('pointerdown', () => this.clickButton())
+    play.setInteractive({ useHandCursor: true })
+    play.on('pointerdown', () => this.clickButton())
   }
 
   clickButton () {
@@ -233,7 +238,7 @@ class WheelScene extends Phaser.Scene {
     this.load.image('pin', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship.png?v=1580653230507')
 
     // loading icons spritesheet
-    this.load.spritesheet('icons', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FFree-space-backgrounds.jpg?v=1580653199804', {
+    this.load.spritesheet('icons', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Flogos.png?v=1580653952539', {
       frameWidth: 200,
       frameHeight: 200
     })
