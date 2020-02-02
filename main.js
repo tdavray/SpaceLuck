@@ -172,9 +172,9 @@ const gameOptions = {
       startColor: 0x00ff00,
       endColor: 0x004400,
       rings: 200,
-      iconFrame: 1,
+      iconFrame: 8,
       iconScale: 0.4,
-      text: 'Fake Earth',
+      text: 'OVNI',
       enabled: true
     },
     {
@@ -264,13 +264,13 @@ class WheelScene extends Phaser.Scene {
     // loading icons spritesheet
     this.load.spritesheet('icons', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Flogos.png?v=1580653952539', {
       frameWidth: 200,
-      frameHeight: 200
+      frameHeight: 180
     })
     
     this.load.image('play', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fplay.png?v=1580653667696')
 
     this.load.audio('spinsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fbonus.wav?v=1580653257764")
-    this.load.audio('fakeearthsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FAppear.mp3?v=1580651020366")
+    this.load.audio('ovnisound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FAppear.mp3?v=1580651020366")
     this.load.audio('sunsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FPower-Up.mp3?v=1580651261079")
     this.load.audio('blackholesound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FRed%20Alert.mp3?v=1580651528413")
     this.load.audio('earthsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FCity_Centre.mp3?v=1580651716774")
@@ -544,9 +544,9 @@ class WheelScene extends Phaser.Scene {
                   console.log(points)
                   break
                 }
-                case 1 : { // FAKE EARTH
+                case 1 : { //  OVNI
                   if(sound === true){
-                    this.sound.play('fakeearthsound');
+                    this.sound.play('ovnisound');
                   }
                   console.log(1)
                   points -= 100
@@ -644,16 +644,6 @@ class WheelScene extends Phaser.Scene {
                   if (this.nameTextA.text !== '_' && this.nameTextB.text !== '_' && this.nameTextC.text !== '_' && input.key === 'Enter') {
                     scoreJson.scores.push({letter1: this.nameTextA.text, letter2: this.nameTextB.text, letter3: this.nameTextC.text, score:points});
                     console.log(scoreJson)
-                    /*var fs = require('fs');
-                    fs.readFile('assets/scores.json', 'utf8', function readFileCallback(err, data){
-                        if (err){
-                            console.log(err);
-                        } else {
-                          var obj = JSON.parse(data);
-                          obj.scores.push({letter1: this.nameTextA.text, letter2: this.nameTextB.text, letter3: this.nameTextC.text, score:points});
-                          var json = JSON.stringify(obj); 
-                          fs.writeFile('assets/scores.json', json, 'utf8'); // write it back 
-                    }});*/
                     this.scene.start('MenuScene')
                   }
                 }, this)
