@@ -566,15 +566,20 @@ class WheelScene extends Phaser.Scene {
                   if(sound === true){
                     this.sound.play('blackholesound');
                   }
-                  let current = true
+                  /*let timeleft = true
                   let count = 20;
-                  while(count > 0){
+                  let timer = game.time.create(false);
+                  timer.loop(2000, function(){
+                    timeleft = false
+                  }, this);
+                  timer.start();
+                  while(count > 0 && timeleft){
                     console.log("count")
                     this.input.on('pointerdown', function(pointer){
                       count--
                       console.log(count)
                    });
-                  }
+                  }*/
                   
                   //this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
                   /*let count;
