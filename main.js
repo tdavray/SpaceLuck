@@ -369,7 +369,7 @@ class WheelScene extends Phaser.Scene {
     })
 
     // this array will contain the allowed degrees
-    this.allowedDegrees = []
+    //this.allowedDegrees = []
 
     // adding a container to group wheel and icons
     this.wheelContainer = this.add.container(950, 300)
@@ -380,12 +380,12 @@ class WheelScene extends Phaser.Scene {
     // looping through each slice
     for (let i = 0; i < gameOptions.slices.length; i++) {
       // if the slice is enabled, that is if the prize can be won...
-      if (gameOptions.slices[i].enabled) {
+      /*if (gameOptions.slices[i].enabled) {
         // ... we insert all slice degrees into allowedDegrees array
         for (let j = 0; j < gameOptions.slices[i].degrees; j++) {
           this.allowedDegrees.push(270 - startDegrees - j)
         }
-      }
+      }*/
 
       // converting colors from 0xRRGGBB format to Color objects
       const startColor = Phaser.Display.Color.ValueToColor(gameOptions.slices[i].startColor)
@@ -477,7 +477,9 @@ class WheelScene extends Phaser.Scene {
       const rounds = Phaser.Math.Between(gameOptions.wheelRounds.min, gameOptions.wheelRounds.max)
 
       // then will rotate by a random amount of degrees picked among the allowed degrees. This is the actual spin
-      const degrees = Phaser.Utils.Array.GetRandom(this.allowedDegrees)
+      //const degrees = this.rnd.integerInRange(400, 2000)
+      const degrees = Math.floor(Math.random() * Math.floor(2000)) + 360
+      console.log(degrees)
 
       // then will rotate back by a random amount of degrees
       const backDegrees = Phaser.Math.Between(gameOptions.backSpin.min, gameOptions.backSpin.max)
@@ -568,7 +570,9 @@ class WheelScene extends Phaser.Scene {
                   }
                   let current = true
                   let count = 20;
-                  this.input.on('pointerdown', count--, this)
+                  while(count > 0){
+                    this.input.on('pointerdown', count--, this)
+                  }
                   
                   //this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
                   /*let count;
