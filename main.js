@@ -230,15 +230,15 @@ class WheelScene extends Phaser.Scene {
   // method to be executed when the scene preloads
   preload () {
     // loading pin image
-    this.load.image('pin', '/assets/spaceship.png')
+    this.load.image('pin', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship.png?v=1580653230507')
 
     // loading icons spritesheet
-    this.load.spritesheet('icons', 'https://i.imgur.com/Xg6yPBS.png', {
+    this.load.spritesheet('icons', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FFree-space-backgrounds.jpg?v=1580653199804', {
       frameWidth: 200,
       frameHeight: 200
     })
 
-    this.load.audio('spinsound',"/assets/bonus.wav")
+    this.load.audio('spinsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fbonus.wav?v=1580653257764")
     this.load.audio('fakeearthsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FAppear.mp3?v=1580651020366")
     this.load.audio('sunsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FPower-Up.mp3?v=1580651261079")
     this.load.audio('blackholesound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FRed%20Alert.mp3?v=1580651528413")
@@ -385,7 +385,7 @@ class WheelScene extends Phaser.Scene {
     // adding the pin in the middle of the canvas
 
     this.pin = this.add.sprite(950, 300, 'pin')
-    this.pin.setScale(0.02, 0.02)
+    this.pin.setScale(0.012, 0.012)
   }
 
   // function to spin the wheel
