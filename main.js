@@ -7,7 +7,6 @@ let points
 let sound = true
 let buyFuel = false
 let ovniChoice = false
-let turnOver = false
 
 let scoreJson = {
    scores: []
@@ -465,7 +464,6 @@ class WheelScene extends Phaser.Scene {
       buyFuel = false
       ovniChoice = false
       spinsLeft -= 1
-      turnOver = false
       this.spinsLeftText.setText(spinsLeft + ' spins left')
       if(sound === true){
         this.sound.play('spinsound');
@@ -546,7 +544,7 @@ class WheelScene extends Phaser.Scene {
                   if(sound === true){
                     this.sound.play('earthsound');
                   }
-                  this.prizeDescText.setText('Home sweet home...\nThe spaceport offer your some fuel (+2 spins)\nDo you want to buy even more ?\n200points = 1 fuel\n (buy using "B")')
+                  this.prizeDescText.setText('Home sweet home...\nThe spaceport offer your some fuel (+2 spins)\nDo you want to buy even more ?\n300points = 1 fuel\n (buy using "B")')
                   buyFuel = true
                   this.input.keyboard.on('keydown', function (input) {
                     if (input.key === 'b' && buyFuel && points > 300) {
@@ -557,7 +555,7 @@ class WheelScene extends Phaser.Scene {
                       return
                     }
                   })
-                  this.scene.canSpin = true
+                  this.canSpin = true
                   break
                 }
                 case 1 : { //  OVNI
@@ -579,7 +577,6 @@ class WheelScene extends Phaser.Scene {
                       this.scene.prizeDescText.setText('The OVNI desepear,\n but also did some of your ressources... (-300 points)')
                       this.scene.pointText.setText(points + ' points')
                       this.scene.canSpin = true
-                      console.log(turnOver)
                       return
                     }
                   })
@@ -590,28 +587,47 @@ class WheelScene extends Phaser.Scene {
                   if(sound === true){
                     this.sound.play('outsound');
                   }
-                  this.scene.canSpin = true
+                  const rand = Math.floor(Math.random() * Math.floor(4))
+                  switch(rand){
+                    case 0 :{
+                      this.prizeDescText.setText('You find some pretty agressive alien ships !\nBut your ship is better.\n You destroy them and scrap some ressources\n(+500 points)')
+                      break
+                    }
+                    case 1 :{
+                      this.prizeDescText.setText('You find some pretty agressive alien ships !\nThey are too strong for you.\n You flee, using a lot of fuel\n(-1 spin)')
+                      break
+                    }
+                    case 2 :{
+                      this.prizeDescText.setText('You find a really frendly alien ship.\n"Take this human"\n "it will be more useful to you".\n(+1 spin and + 250 points)')
+                      break
+                    }
+                    case 3 :{
+                      this.prizeDescText.setText('You find a market station.\nThey sell fuel for really cheap !\n150points = 1 fuel\n (buy using "B")')
+                      break
+                    }
+                  }
+                  this.canSpin = true
                   break
                 }
                 case 3 : { // BLACKHOLE
                   if(sound === true){
                     this.sound.play('blackholesound');
                   }
-                  this.scene.canSpin = true
+                  this.canSpin = true
                   break
                 }
                 case 4 : { // MARS
                   if(sound === true){
                     this.sound.play('marssound');
                   }
-                  this.scene.canSpin = true
+                  this.canSpin = true
                   break
                 }
                 case 5 : { // SUN
                   if(sound === true){
                     this.sound.play('sunsound');
                   }
-                  this.scene.canSpin = true
+                  this.canSpin = true
                   spinsLeft += 2
                   this.spinsLeftText.setText(spinsLeft + ' spins left')
                   break
