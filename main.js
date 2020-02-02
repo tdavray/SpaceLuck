@@ -327,16 +327,26 @@ class WheelScene extends Phaser.Scene {
       align: 'center',
       color: 'white'
     }) 
-    this.soundText.setInteractive({ useHandCursor: true })
-    this.soundText.on('pointerdown', () => this.clickSound())
     
     // center the text
     this.soundText.setOrigin(0.5)
+    this.soundkey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    this.soundkey.onDown.add(this.switchSound, this);
+    this.input.keyboard.on('keydown_ONE', function (event) {
+      console.log("trigger")
+      sound = !sound
+      var soundtxt = 'Activate sound'
+      if(sound === true){
+        soundtxt = 'Desactivate sound'
+      }
+      this.soundText.setText(soundtxt)
+    });
 
     // this.sound.add('spin');
   }
   
-  clickSound () {
+  switchSound () {
+    console.log("trigger")
     sound = !sound
     var soundtxt = 'Activate sound'
     if(sound === true){
