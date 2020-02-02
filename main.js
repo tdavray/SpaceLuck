@@ -63,14 +63,15 @@ class MenuScene extends Phaser.Scene {
       align: 'center',
       color: 'white'
     })
-    var textHS
-    console.log(scoreJson.scores.length)
+    var textHS = ""
+    console.log(scoreJson.scores)
     if(!scoreJson.scores.length){
       textHS = "No scores yet"
     }
     else{
       scoreJson.scores.forEach(function(score){
-        textHS += score.letter1 + score.letter2 + score.letter3
+        if(score)
+          textHS += score.letter1 + score.letter2 + score.letter3 + "  :  " + score.score + "points\n"
         
       })
     }
@@ -237,20 +238,9 @@ class WheelScene extends Phaser.Scene {
       frameHeight: 200
     })
 
-    /* var iconsImg = new Image();
-        iconsImg.onload = () => {
-            this.textures.addSpriteSheet('icons', iconsImg, { frameWidth: 200, frameHeight: 200 });
-        };
-        iconsImg.src = iconsImage; */
-
-    // this.cache.json.add('sfx', audioJSON);
-
-    /* var audioCtx = new (window.AudioContext)();
-        audioCtx.decodeAudioData(toArrayBuffer(spinSound), (buffer) => {
-            this.cache.audio.add('sfx', buffer);
-        }, (e) => { console.log("Error with decoding audio data"); }); */
-
-    // this.load.scenePlugin('WebpackLoader', WebpackLoader, 'loader', 'loader');
+    this.load.audio('spinsound',"/assets/bonus.wav")
+    this.load.audio('FakeEarthSound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FAppear.mp3?v=1580651020366")
+    
   }
 
   // method to be executed once the scene has been created
@@ -400,7 +390,7 @@ class WheelScene extends Phaser.Scene {
     if (this.canSpin) {
       spinsLeft -= 1
       this.spinsLeftText.setText(spinsLeft + ' spins left')
-      // this.sound.play('spin');
+      this.sound.play('spinsound');
       // this.sound.playAudioSprite('spinsound', 'glass');
 
       // resetting text field
@@ -480,6 +470,7 @@ class WheelScene extends Phaser.Scene {
                   break
                 }
                 case 1 : { // FAKE EARTH
+                  this.sound.play('fakeearthsound');
                   console.log(1)
                   points -= 100
                   console.log(points)
