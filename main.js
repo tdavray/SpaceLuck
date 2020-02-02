@@ -239,8 +239,12 @@ class WheelScene extends Phaser.Scene {
     })
 
     this.load.audio('spinsound',"/assets/bonus.wav")
-    this.load.audio('FakeEarthSound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FAppear.mp3?v=1580651020366")
-    
+    this.load.audio('fakeearthsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FAppear.mp3?v=1580651020366")
+    this.load.audio('sunsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FPower-Up.mp3?v=1580651261079")
+    this.load.audio('blackholesound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FRed%20Alert.mp3?v=1580651528413")
+    this.load.audio('earthsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FCity_Centre.mp3?v=1580651716774")
+    this.load.audio('marssound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FCity_Centre.mp3?v=1580651716774")
+    this.load.audio('outsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FTime%20Warp.mp3?v=1580651368971")
   }
 
   // method to be executed once the scene has been created
@@ -465,6 +469,7 @@ class WheelScene extends Phaser.Scene {
 
               switch (prize) {
                 case 0 : { // EARTH
+                  this.sound.play('earthsound');
                   points += 100
                   console.log(points)
                   break
@@ -477,24 +482,28 @@ class WheelScene extends Phaser.Scene {
                   break
                 }
                 case 2 : { // OUT OF SOLAR SYSTEM
+                  this.sound.play('outsound');
                   console.log(2)
                   points -= 50
                   console.log(points)
                   break
                 }
                 case 3 : { // BLACKHOLE
+                  this.sound.play('blackholesound');
                   console.log(3)
                   points /= 2
                   console.log(points)
                   break
                 }
                 case 4 : { // MARS
+                  this.sound.play('marssound');
                   console.log(4)
                   points *= 2
                   console.log(points)
                   break
                 }
                 case 5 : { // SUN
+                  this.sound.play('sunsound');
                   console.log(5)
                   spinsLeft += 2
                   this.spinsLeftText.setText(spinsLeft + ' spins left')
