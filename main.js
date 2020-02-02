@@ -5,7 +5,8 @@ let game
 let spinsLeft
 let points
 let sound = true
-let buyFuel = false
+let buyFuelHuman = false
+let buyFuelMarket = false
 let ovniChoice = false
 
 let scoreJson = {
@@ -333,7 +334,9 @@ class WheelScene extends Phaser.Scene {
     // center the text
     this.soundText.setOrigin(0.5)
     
+    
     this.input.keyboard.on('keydown', function (input) {
+      //SOUND SWITCH
       if (input.key === 'a' && spinsLeft > 0) {
         console.log("trigger")
         sound = !sound
@@ -344,7 +347,49 @@ class WheelScene extends Phaser.Scene {
         console.log(this.scene)
         this.scene.soundText.setText(soundtxt)
       }
+      
+      //EARTH EVENT
+      if (input.key === 'b' && buyFuelHuman && points > 300) {
+        points -= 300
+        spinsLeft += 1
+        this.scene.pointText.setText(points + ' points')
+        this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+        return
+      }
+      
+      //OVNI EVENT
+      if (input.key === 'f' && ovniChoice) {
+        if(spinsLeft < 1){
+          this.scene.prizeDescText.setText('The OVNI desepear,\n You had no fuel, so it took ressources... (-300 points)')
+          if(point)
+          this.scene.pointText.setText(points + ' points')
+        }
+        else{
+          spinsLeft -= 1
+          this.scene.prizeDescText.setText('The OVNI desepear,\n but with some of your fuel... (-1 spin)')
+          this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+        }
+        this.scene.canSpin = true
+        return
+      }
+      if (input.key === 'r' && ovniChoice) {
+        points -= 300
+        this.scene.prizeDescText.setText('The OVNI desepear,\n but also did some of your ressources... (-300 points)')
+        this.scene.pointText.setText(points + ' points')
+        this.scene.canSpin = true
+        return
+      }
+      
+      //MARKET EVENT (OUT OF SOLAR SYSTEM)
+      if (input.key === 'b' && buyFuelMarket && points > 150) {
+        points -= 150
+        spinsLeft += 1
+        this.scene.pointText.setText(points + ' points')
+        this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+        return
+      }
     })
+    
 
   }
   
@@ -461,7 +506,8 @@ class WheelScene extends Phaser.Scene {
   spinWheel () {
     // can we spin the wheel?
     if (this.canSpin) {
-      buyFuel = false
+      buyFuelHuman = false
+      buyFuelMarket = false
       ovniChoice = false
       spinsLeft -= 1
       this.spinsLeftText.setText(spinsLeft + ' spins left')
@@ -545,16 +591,7 @@ class WheelScene extends Phaser.Scene {
                     this.sound.play('earthsound');
                   }
                   this.prizeDescText.setText('Home sweet home...\nThe spaceport offer your some fuel (+2 spins)\nDo you want to buy even more ?\n300points = 1 fuel\n (buy using "B")')
-                  buyFuel = true
-                  this.input.keyboard.on('keydown', function (input) {
-                    if (input.key === 'b' && buyFuel && points > 300) {
-                      points -= 300
-                      spinsLeft += 1
-                      this.scene.pointText.setText(points + ' points')
-                      this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
-                      return
-                    }
-                  })
+                  buyFuelHuman = true
                   this.canSpin = true
                   break
                 }
@@ -564,22 +601,7 @@ class WheelScene extends Phaser.Scene {
                   }
                   this.prizeDescText.setText('Should we be scared?\nYou hear a strange voice whisper : \n"FUEL OR RESSOURCES?"\n(F for Fuel, R for ressources)')
                   ovniChoice = true
-                  this.input.keyboard.on('keydown', function (input) {
-                    if (input.key === 'f' && ovniChoice) {
-                      spinsLeft -= 1
-                      this.scene.prizeDescText.setText('The OVNI desepear,\n but with some of your fuel... (-1 spin)')
-                      this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
-                      this.scene.canSpin = true
-                      return
-                    }
-                    if (input.key === 'r' && ovniChoice) {
-                      points -= 300
-                      this.scene.prizeDescText.setText('The OVNI desepear,\n but also did some of your ressources... (-300 points)')
-                      this.scene.pointText.setText(points + ' points')
-                      this.scene.canSpin = true
-                      return
-                    }
-                  })
+                  
                   //turnOver = true
                   break
                 }
@@ -591,18 +613,24 @@ class WheelScene extends Phaser.Scene {
                   switch(rand){
                     case 0 :{
                       this.prizeDescText.setText('You find some pretty agressive alien ships !\nBut your ship is better.\n You destroy them and scrap some ressources\n(+500 points)')
+                      this.points += 500
                       break
                     }
                     case 1 :{
                       this.prizeDescText.setText('You find some pretty agressive alien ships !\nThey are too strong for you.\n You flee, using a lot of fuel\n(-1 spin)')
+                      if(this.spinsLeft > 0)
+                        this.spinsLeft -= 1
                       break
                     }
                     case 2 :{
                       this.prizeDescText.setText('You find a really frendly alien ship.\n"Take this human"\n "it will be more useful to you".\n(+1 spin and + 250 points)')
+                      this.points += 250
+                      this.spinsLeft += 1
                       break
                     }
                     case 3 :{
                       this.prizeDescText.setText('You find a market station.\nThey sell fuel for really cheap !\n150points = 1 fuel\n (buy using "B")')
+                      buyFuelMarket = true
                       break
                     }
                   }
