@@ -558,6 +558,10 @@ class WheelScene extends Phaser.Scene {
 
   // function to spin the wheel
   spinWheel () {
+    if (marsChoice){
+      marsChoice = false
+      this.spinWheel = true
+    }
     // can we spin the wheel?
     if (this.canSpin && spinsLeft > 0) {
       buyFuelHuman = false
@@ -849,11 +853,10 @@ class WheelScene extends Phaser.Scene {
         this.pointText.setText(points + ' points')
         this.prizeDescText.setText("The alien flip a coin... AND...\n YAY! You won ! It's your lucky day.")
       }
-      this.input.on('pointerdown', function(pointer){
-        if (marsChoice)
-          this.spinWheel = true
-      });
-      marsChoice = false
+      this.firstChoice.setText("")
+      this.secondChoice.setText("")
+      this.thirdChoice.setText("")
+      this.lastChoice.setText("")
     }
   }
 }
