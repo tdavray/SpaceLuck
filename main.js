@@ -8,7 +8,6 @@ let sound = true
 let buyFuelHuman = false
 let buyFuelMarket = false
 let ovniChoice = false
-let marsChoice = false
 
 let scoreJson = {
    scores: []
@@ -428,14 +427,6 @@ class WheelScene extends Phaser.Scene {
         this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
         return
       }
-      
-      
-      if (input.key === 'A' && marsChoice) {
-        const rand = Math.floor(Math.random() * Math.floor(2))
-        
-        this.scene.canSpin = true
-        return
-      }
     })
   }
   
@@ -569,7 +560,6 @@ class WheelScene extends Phaser.Scene {
       buyFuelHuman = false
       buyFuelMarket = false
       ovniChoice = false
-      marsChoice = false
       spinsLeft -= 1
       this.spinsLeftText.setText(spinsLeft + ' spins left')
       if(sound === true){
@@ -720,6 +710,7 @@ class WheelScene extends Phaser.Scene {
                       this.removePoints(150)
                       this.removeSpins(1)
                       this.spinsLeftText.setText(spinsLeft + ' spins left')
+                      this.pointText.setText(points + ' points')
                       break
                     }
                     case 2 :{
@@ -727,6 +718,7 @@ class WheelScene extends Phaser.Scene {
                       this.removePoints(300)
                       this.removeSpins(1)
                       this.spinsLeftText.setText(spinsLeft + ' spins left')
+                      this.pointText.setText(points + ' points')
                       break
                     }
                   }
@@ -737,18 +729,61 @@ class WheelScene extends Phaser.Scene {
                   if(sound === true){
                     this.sound.play('marssound');
                   }
+                  let amount = 0
+                  this.prizeDescText.setText('On Mars, you play a betting game with an Alien\nPlease choose how much you want to bet : ')
                   
                   this.firstChoice = this.add.text(350, 420, '100', {
                     font: 'bold 24px Arial',
                     align: 'center',
                     color: 'white'
                   })
-                  this.secondChoice = this.add.text(400, 420, '200', {
+                  if(points > 100){
+                    this.firstChoice.setInteractive({ useHandCursor: true })
+                    this.firstChoice.on('pointerdown', () => amount = 100)
+                  }
+                  
+                  if(points > 200){
+                    this.secondChoice = this.add.text(400, 420, '200', {
+                      font: 'bold 24px Arial',
+                      align: 'center',
+                      color: 'white'
+                    })
+                    this.secondChoice.setInteractive({ useHandCursor: true })
+                    this.secondChoice.on('pointerdown', () => amount = 200)
+                  }
+                  
+                  if(points > 500){
+                    this.thirdChoice = this.add.text(400, 420, '500', {
+                      font: 'bold 24px Arial',
+                      align: 'center',
+                      color: 'white'
+                    })
+                    this.thirdChoice.setInteractive({ useHandCursor: true })
+                    this.thirdChoice.on('pointerdown', () => amount = 500)
+                  }
+                  
+                  this.lastChoice = this.add.text(400, 420, "all : " + points, {
                     font: 'bold 24px Arial',
                     align: 'center',
                     color: 'white'
                   })
-                  marsChoice = true
+                  this.thirdChoice.setInteractive({ useHandCursor: true })
+                  this.thirdChoice.on('pointerdown', () => amount = points)
+                  
+                  const rand = Math.floor(Math.random() * Math.floor(2))
+                  if(rand === 0 && amount != 0){
+                    this.removePoints(amount)
+                    this.pointText.setText(points + ' points')
+                    this.canSpin = true
+                    this.prizeDescText.setText('On Mars, you play a betting game with an Alien\nPlease choose how much you want to bet : ')
+                  }
+                  else if(amount != 0){
+                    points += amount
+                    this.pointText.setText(points + ' points')
+                    this.prizeDescText.setText('On Mars, you play a betting game with an Alien\nPlease choose how much you want to bet : ')
+                    this.canSpin = true
+                  }
+                  
                   break
                 }
                 case 5 : { // SUN
