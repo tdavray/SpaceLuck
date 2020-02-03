@@ -558,10 +558,7 @@ class WheelScene extends Phaser.Scene {
 
   // function to spin the wheel
   spinWheel () {
-    if (marsChoice){
-      marsChoice = false
-      this.spinWheel = true
-    }
+
     // can we spin the wheel?
     if (this.canSpin && spinsLeft > 0) {
       buyFuelHuman = false
@@ -740,32 +737,37 @@ class WheelScene extends Phaser.Scene {
                   let amount = 0
                   this.prizeDescText.setText('On Mars, you play a betting game with an Alien\nPlease choose how much you want to bet : ')
                   
+                  let color = points > 100 ? 'white' : 'grey';
                   this.firstChoice = this.add.text(300, 420, '100', {
                     font: 'bold 24px Arial',
                     align: 'center',
-                    color: 'white'
+                    color: color
                   })
                   if(points > 100){
                     this.firstChoice.setInteractive({ useHandCursor: true })
                     this.firstChoice.on('pointerdown', () => this.marsSelect(100))
                   }
                   
+                  color = points > 200 ? 'white' : 'grey';
+                  
+                  this.secondChoice = this.add.text(350, 420, '200', {
+                    font: 'bold 24px Arial',
+                    align: 'center',
+                    color: color
+                  })
                   if(points > 200){
-                    this.secondChoice = this.add.text(350, 420, '200', {
-                      font: 'bold 24px Arial',
-                      align: 'center',
-                      color: 'white'
-                    })
                     this.secondChoice.setInteractive({ useHandCursor: true })
                     this.secondChoice.on('pointerdown', () => this.marsSelect(200))
                   }
                   
+                  color = points > 500 ? 'white' : 'grey';
+                  
+                  this.thirdChoice = this.add.text(400, 420, '500', {
+                    font: 'bold 24px Arial',
+                    align: 'center',
+                    color: color
+                  })
                   if(points > 500){
-                    this.thirdChoice = this.add.text(400, 420, '500', {
-                      font: 'bold 24px Arial',
-                      align: 'center',
-                      color: 'white'
-                    })
                     this.thirdChoice.setInteractive({ useHandCursor: true })
                     this.thirdChoice.on('pointerdown', () => this.marsSelect(500))
                   }
@@ -857,6 +859,14 @@ class WheelScene extends Phaser.Scene {
       this.secondChoice.setText("")
       this.thirdChoice.setText("")
       this.lastChoice.setText("")
+      
+      this.input.on('pointerdown', function(){
+        if (marsChoice){
+          marsChoice = false
+          this.scene.canSpin = true
+        }
+      });
+          
     }
   }
 }
