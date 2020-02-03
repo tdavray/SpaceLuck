@@ -390,6 +390,7 @@ class WheelScene extends Phaser.Scene {
         }
         else{
           this.scene.prizeDescText.setText('The OVNI desepear,\n and you have more fuel ! (+1 spin)')
+          spinsLeft ++
           this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
         }
         this.scene.canSpin = true
@@ -397,6 +398,7 @@ class WheelScene extends Phaser.Scene {
       }
       if (input.key === 'r' && ovniChoice) {
         const rand = Math.floor(Math.random() * Math.floor(2))
+        console.log(rand)
         if(rand === 0){
           if(points < 300){
             this.scene.prizeDescText.setText('The OVNI desepear,\n You had not enough ressources, so it took fuel... (-1 spin)')
@@ -700,13 +702,13 @@ class WheelScene extends Phaser.Scene {
                   const rand = Math.floor(Math.random() * Math.floor(3))
                   switch(rand){
                     case 0 :{
-                      this.prizeDescText.setText('You got a little bit too close of a blackhole\nYou had to eject some ressources to lighten your ship(-100 points)')
+                      this.prizeDescText.setText('You got a little bit too close of a blackhole\nYou had to eject some ressources to lighten your ship\n(-100 points)')
                       this.removePoints(100)
                       this.pointText.setText(points + ' points')
                       break
                     }
                     case 1 :{
-                      this.prizeDescText.setText('You got too close of a blackhole!\nYou had to eject some ressources to lighten your ship\nYou also used a lot of fuel(-150 points and -1 spin)')
+                      this.prizeDescText.setText('You got too close of a blackhole!\nYou had to eject some ressources to lighten your ship\nYou also used a lot of fuel\n(-150 points and -1 spin)')
                       this.removePoints(150)
                       this.removeSpins(1)
                       this.spinsLeftText.setText(spinsLeft + ' spins left')
@@ -714,7 +716,7 @@ class WheelScene extends Phaser.Scene {
                       break
                     }
                     case 2 :{
-                      this.prizeDescText.setText('You got way too close of a blackhole!!!\nYou had to eject a lot ressources to lighten your ship\nYou also used a lot of fuel(-300 points and -1 spin)')
+                      this.prizeDescText.setText('You got way too close of a blackhole!!!\nYou had to eject a lot ressources to lighten your ship\nYou also used a lot of fuel\n(-300 points and -1 spin)')
                       this.removePoints(300)
                       this.removeSpins(1)
                       this.spinsLeftText.setText(spinsLeft + ' spins left')
@@ -732,24 +734,24 @@ class WheelScene extends Phaser.Scene {
                   let amount = 0
                   this.prizeDescText.setText('On Mars, you play a betting game with an Alien\nPlease choose how much you want to bet : ')
                   
-                  this.firstChoice = this.add.text(350, 420, '100', {
+                  this.firstChoice = this.add.text(300, 420, '100', {
                     font: 'bold 24px Arial',
                     align: 'center',
                     color: 'white'
                   })
                   if(points > 100){
                     this.firstChoice.setInteractive({ useHandCursor: true })
-                    this.firstChoice.on('pointerdown', () => amount = 100)
+                    this.firstChoice.on('pointerdown', () => this.marsSelect(100))
                   }
                   
                   if(points > 200){
-                    this.secondChoice = this.add.text(400, 420, '200', {
+                    this.secondChoice = this.add.text(350, 420, '200', {
                       font: 'bold 24px Arial',
                       align: 'center',
                       color: 'white'
                     })
                     this.secondChoice.setInteractive({ useHandCursor: true })
-                    this.secondChoice.on('pointerdown', () => amount = 200)
+                    this.secondChoice.on('pointerdown', () => this.marsSelect(200))
                   }
                   
                   if(points > 500){
@@ -759,30 +761,18 @@ class WheelScene extends Phaser.Scene {
                       color: 'white'
                     })
                     this.thirdChoice.setInteractive({ useHandCursor: true })
-                    this.thirdChoice.on('pointerdown', () => amount = 500)
+                    this.thirdChoice.on('pointerdown', () => this.marsSelect(500))
                   }
                   
-                  this.lastChoice = this.add.text(400, 420, "all : " + points, {
+                  this.lastChoice = this.add.text(450, 420, "all : " + points, {
                     font: 'bold 24px Arial',
                     align: 'center',
                     color: 'white'
                   })
-                  this.thirdChoice.setInteractive({ useHandCursor: true })
-                  this.thirdChoice.on('pointerdown', () => amount = points)
+                  this.lastChoice.setInteractive({ useHandCursor: true })
+                  this.lastChoice.on('pointerdown', () => this.marsSelect(points))
                   
-                  const rand = Math.floor(Math.random() * Math.floor(2))
-                  if(rand === 0 && amount != 0){
-                    this.removePoints(amount)
-                    this.pointText.setText(points + ' points')
-                    this.prizeDescText.setText('The alien flip a coin... AND...\n Oh no you lost... Better luck next time.')
-                    this.canSpin = true
-                  }
-                  else if(amount != 0){
-                    points += amount
-                    this.pointText.setText(points + ' points')
-                    this.prizeDescText.setText("The alien flip a coin... AND...\n YAY! You won ! It's your lucky day.")
-                    this.canSpin = true
-                  }
+                  
                   
                   break
                 }
@@ -806,39 +796,55 @@ class WheelScene extends Phaser.Scene {
       })
     }
     if (this.canSpin && spinsLeft <= 0) {
-                this.prizeText.setText("It's the end of your interstellar trip !")
-                this.prizeDescText.setText('Points : ' + points)
-                this.nameTextA = this.add.text(950, 800, '_', {
-                  font: 'bold 25px Arial',
-                  align: 'center',
-                  color: 'white'
-                })
-                this.nameTextB = this.add.text(980, 800, '_', {
-                  font: 'bold 25px Arial',
-                  align: 'center',
-                  color: 'white'
-                })
-                this.nameTextC = this.add.text(1010, 800, '_', {
-                  font: 'bold 25px Arial',
-                  align: 'center',
-                  color: 'white'
-                })
-                this.input.keyboard.on('keydown', function (input) {
-                  if (this.nameTextA.text === '_') {
-                    this.nameTextA.setText(input.key)
-                    return
-                  } else if (this.nameTextB.text === '_') {
-                    this.nameTextB.setText(input.key)
-                    return
-                  } else if (this.nameTextC.text === '_') {
-                    this.nameTextC.setText(input.key)
-                    return
-                  }
-                  if (this.nameTextA.text !== '_' && this.nameTextB.text !== '_' && this.nameTextC.text !== '_' && input.key === 'Enter') {
-                    scoreJson.scores.push({letter1: this.nameTextA.text, letter2: this.nameTextB.text, letter3: this.nameTextC.text, score:points});
-                    this.scene.start('MenuScene')
-                  }
-                }, this)
-              }
+      this.prizeText.setText("It's the end of your interstellar trip !")
+      this.prizeDescText.setText('Points : ' + points)
+      this.nameTextA = this.add.text(950, 800, '_', {
+        font: 'bold 25px Arial',
+        align: 'center',
+        color: 'white'
+      })
+      this.nameTextB = this.add.text(980, 800, '_', {
+        font: 'bold 25px Arial',
+        align: 'center',
+        color: 'white'
+      })
+      this.nameTextC = this.add.text(1010, 800, '_', {
+        font: 'bold 25px Arial',
+        align: 'center',
+        color: 'white'
+      })
+      this.input.keyboard.on('keydown', function (input) {
+        if (this.nameTextA.text === '_') {
+          this.nameTextA.setText(input.key)
+          return
+        } else if (this.nameTextB.text === '_') {
+          this.nameTextB.setText(input.key)
+          return
+        } else if (this.nameTextC.text === '_') {
+          this.nameTextC.setText(input.key)
+          return
+        }
+        if (this.nameTextA.text !== '_' && this.nameTextB.text !== '_' && this.nameTextC.text !== '_' && input.key === 'Enter') {
+          scoreJson.scores.push({letter1: this.nameTextA.text, letter2: this.nameTextB.text, letter3: this.nameTextC.text, score:points});
+          this.scene.start('MenuScene')
+        }
+      }, this)
+    }
+  }
+  
+  marsSelect(amount){
+    const rand = Math.floor(Math.random() * Math.floor(2))
+    if(rand === 0){
+      this.removePoints(amount)
+      this.pointText.setText(points + ' points')
+      this.prizeDescText.setText('The alien flip a coin... AND...\n Oh no you lost... Better luck next time.')
+      //this.canSpin = true
+    }
+    else{
+      points += amount
+      this.pointText.setText(points + ' points')
+      this.prizeDescText.setText("The alien flip a coin... AND...\n YAY! You won ! It's your lucky day.")
+      //this.canSpin = true
+    }
   }
 }
