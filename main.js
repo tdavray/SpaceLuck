@@ -8,6 +8,7 @@ let sound = true
 let buyFuelHuman = false
 let buyFuelMarket = false
 let ovniChoice = false
+let marsChoice = false
 
 let scoreJson = {
    scores: []
@@ -375,28 +376,43 @@ class WheelScene extends Phaser.Scene {
       
       //OVNI EVENT
       if (input.key === 'f' && ovniChoice) {
-        if(spinsLeft < 1){
-          this.scene.prizeDescText.setText('The OVNI desepear,\n You had no fuel, so it took ressources... (-300 points)')
-            this.scene.removePoints(300)
-          this.scene.pointText.setText(points + ' points')
+        const rand = Math.floor(Math.random() * Math.floor(2))
+        if(rand === 0){
+          if(spinsLeft < 1){
+            this.scene.prizeDescText.setText('The OVNI desepear,\n You had no fuel, so it took ressources... (-300 points)')
+              this.scene.removePoints(300)
+            this.scene.pointText.setText(points + ' points')
+          }
+          else{
+            this.scene.removeSpins(1)
+            this.scene.prizeDescText.setText('The OVNI desepear,\n but with some of your fuel... (-1 spin)')
+            this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+          }
         }
         else{
-          this.scene.removeSpins(1)
-          this.scene.prizeDescText.setText('The OVNI desepear,\n but with some of your fuel... (-1 spin)')
+          this.scene.prizeDescText.setText('The OVNI desepear,\n and you have more fuel ! (+1 spin)')
           this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
         }
         this.scene.canSpin = true
         return
       }
       if (input.key === 'r' && ovniChoice) {
-        if(points < 300){
-          this.scene.prizeDescText.setText('The OVNI desepear,\n You had not enough ressources, so it took fuel... (-1 spin)')
-          this.scene.removeSpins(1)
-          this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+        const rand = Math.floor(Math.random() * Math.floor(2))
+        if(rand === 0){
+          if(points < 300){
+            this.scene.prizeDescText.setText('The OVNI desepear,\n You had not enough ressources, so it took fuel... (-1 spin)')
+            this.scene.removeSpins(1)
+            this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+          }
+          else{
+            this.scene.removePoints(300)
+            this.scene.prizeDescText.setText('The OVNI desepear,\n but also did some of your ressources... (-300 points)')
+            this.scene.pointText.setText(points + ' points')
+          }
         }
         else{
-          this.scene.removePoints(300)
-          this.scene.prizeDescText.setText('The OVNI desepear,\n but also did some of your ressources... (-300 points)')
+          points += 300
+          this.scene.prizeDescText.setText('The OVNI desepear,\n and you have more ressources! (+300 points)')
           this.scene.pointText.setText(points + ' points')
         }
         
@@ -410,6 +426,14 @@ class WheelScene extends Phaser.Scene {
         spinsLeft += 1
         this.scene.pointText.setText(points + ' points')
         this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+        return
+      }
+      
+      
+      if (input.key === 'A' && marsChoice) {
+        const rand = Math.floor(Math.random() * Math.floor(2))
+        
+        this.scene.canSpin = true
         return
       }
     })
@@ -545,6 +569,7 @@ class WheelScene extends Phaser.Scene {
       buyFuelHuman = false
       buyFuelMarket = false
       ovniChoice = false
+      marsChoice = false
       spinsLeft -= 1
       this.spinsLeftText.setText(spinsLeft + ' spins left')
       if(sound === true){
@@ -712,7 +737,18 @@ class WheelScene extends Phaser.Scene {
                   if(sound === true){
                     this.sound.play('marssound');
                   }
-                  this.canSpin = true
+                  
+                  this.firstChoice = this.add.text(350, 420, '100', {
+                    font: 'bold 24px Arial',
+                    align: 'center',
+                    color: 'white'
+                  })
+                  this.secondChoice = this.add.text(400, 420, '200', {
+                    font: 'bold 24px Arial',
+                    align: 'center',
+                    color: 'white'
+                  })
+                  marsChoice = true
                   break
                 }
                 case 5 : { // SUN
