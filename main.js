@@ -8,6 +8,7 @@ let sound = true
 let buyFuelHuman = false
 let buyFuelMarket = false
 let ovniChoice = false
+let marsChoice = false
 
 let scoreJson = {
    scores: []
@@ -731,6 +732,7 @@ class WheelScene extends Phaser.Scene {
                   if(sound === true){
                     this.sound.play('marssound');
                   }
+                  marsChoice = true
                   let amount = 0
                   this.prizeDescText.setText('On Mars, you play a betting game with an Alien\nPlease choose how much you want to bet : ')
                   
@@ -772,7 +774,9 @@ class WheelScene extends Phaser.Scene {
                   this.lastChoice.setInteractive({ useHandCursor: true })
                   this.lastChoice.on('pointerdown', () => this.marsSelect(points))
                   
-                  
+                  if(!marsChoice){
+                    this.canSpin = true
+                  }
                   
                   break
                 }
@@ -834,17 +838,22 @@ class WheelScene extends Phaser.Scene {
   
   marsSelect(amount){
     const rand = Math.floor(Math.random() * Math.floor(2))
-    if(rand === 0){
-      this.removePoints(amount)
-      this.pointText.setText(points + ' points')
-      this.prizeDescText.setText('The alien flip a coin... AND...\n Oh no you lost... Better luck next time.')
-      //this.canSpin = true
-    }
-    else{
-      points += amount
-      this.pointText.setText(points + ' points')
-      this.prizeDescText.setText("The alien flip a coin... AND...\n YAY! You won ! It's your lucky day.")
-      //this.canSpin = true
+    if(marsChoice){
+      if(rand === 0){
+        this.removePoints(amount)
+        this.pointText.setText(points + ' points')
+        this.prizeDescText.setText('The alien flip a coin... AND...\n Oh no you lost... Better luck next time.')
+      }
+      else{
+        points += amount
+        this.pointText.setText(points + ' points')
+        this.prizeDescText.setText("The alien flip a coin... AND...\n YAY! You won ! It's your lucky day.")
+      }
+      this.input.on('pointerdown', function(pointer){
+        if (marsChoice)
+          this.spinWheel = true
+      });
+      marsChoice = false
     }
   }
 }
