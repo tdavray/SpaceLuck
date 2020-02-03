@@ -180,7 +180,7 @@ const gameOptions = {
       startColor: 0xadebeb,
       endColor: 0x1f7a7a,
       rings: 3,
-      iconFrame: 0,
+      iconFrame: 1,
       iconScale: 0.4,
       text: 'Earth',
       enabled: true
