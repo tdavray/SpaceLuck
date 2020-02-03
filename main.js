@@ -774,13 +774,13 @@ class WheelScene extends Phaser.Scene {
                   if(rand === 0 && amount != 0){
                     this.removePoints(amount)
                     this.pointText.setText(points + ' points')
+                    this.prizeDescText.setText('The alien flip a coin... AND...\n Oh no you lost... Better luck next time.')
                     this.canSpin = true
-                    this.prizeDescText.setText('On Mars, you play a betting game with an Alien\nPlease choose how much you want to bet : ')
                   }
                   else if(amount != 0){
                     points += amount
                     this.pointText.setText(points + ' points')
-                    this.prizeDescText.setText('On Mars, you play a betting game with an Alien\nPlease choose how much you want to bet : ')
+                    this.prizeDescText.setText("The alien flip a coin... AND...\n YAY! You won ! It's your lucky day.")
                     this.canSpin = true
                   }
                   
