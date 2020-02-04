@@ -64,7 +64,8 @@ https://spin.atomicobject.com/
 https://www.emanueleferonato.com/
 
 ## Question and answer :
-1. What is easing? Write few types of easing. Where would you apply easing functions? 
+**1. What is easing? Write few types of easing. Where would you apply easing functions? **
+
 Easing define how an animation should evolve in time, what behavior it should take.
 
 Some examples of easing types :
@@ -74,23 +75,38 @@ Some examples of easing types :
 
 You apply these functions when you create define the animation behavior.
 
-2. What are pros & cons of using Promises in Javascript?  What is the super-set of Promises?
+**2. What are pros & cons of using Promises in Javascript?  What is the super-set of Promises?**
 
 Pros :
 
-When you use Promises, you don't have to use nested callbacks (so the code is more understandable and with less indentation)
+When you use Promises, you don't have to use nested callbacks, so the code is more understandable and with less indentation.
+It makes the asynchronous code looks clean and you can understand instantly the sequence of events
 
 Cons :
 
 The only cons of using Promises could be the difficulty to fully understand how it work and how to properly use them.
 
-3. Which non programmable parts of the graphics pipeline can be used to speed up
-rendering and improve performance. Please give examples.
-4. Pick three design patterns that are in your opinion most useful for game development, describe them and write a short example how would you use them in development process.
-5. Explain Redux design pattern.
-6. What is game loop? What is FPS?
-7. Write code to convert an array of strings to an array of the lengths of those strings – use JS ES6 or TS
-8. Write code to sum an array of numbers – use JS ES6 or TS
+I would say that a super-set of promises is a set of promises with other sub-sets of promises. Groups of classified promises.
+
+**3. Which non programmable parts of the graphics pipeline can be used to speed up rendering and improve performance. Please give examples.**
+
+After some research, I would say the rasterization and interpolation parts.
+
+An example would be to have a more efficient gaussian blur with linear sampling : [see this link](http://rastergrid.com/blog/2010/09/efficient-gaussian-blur-with-linear-sampling/)
+
+**4. Pick three design patterns that are in your opinion most useful for game development, describe them and write a short example how would you use them in development process.**
+
+
+**5. Explain Redux design pattern.**
+
+
+**6. What is game loop? What is FPS?**
+
+
+**7. Write code to convert an array of strings to an array of the lengths of those strings – use JS ES6 or TS**
+
+
+**8. Write code to sum an array of numbers – use JS ES6 or TS**
 
 
 ***
