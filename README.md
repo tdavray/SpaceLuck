@@ -1,5 +1,6 @@
 # [Space Luck](https://space-luck.glitch.me/)
 ## A lucky wheel Phaser 3 Game
+_Developed in the context of a technical test for PlaysafeSA_
 
 ## How To Play :
 1. Go to [Space luck website](https://space-luck.glitch.me/)
@@ -7,7 +8,7 @@
 3. Click anywhere to spin the wheel
 4. Wait for the wheel to completely stop to see the event (written on the left of the wheel)
 5. You can see your points and your remaining attempts on the upper left corner
--. When you have no attempts remaining, the game is over. You can enter the 3 first letters of your name and play again.
+6. When you have no attempts remaining, the game is over. You can enter the 3 first letters of your name and play again.
 
 ## Events during the game :
 Fuel = Attempts
@@ -20,13 +21,13 @@ Ressources = Points
 
 **_OUT OF SOLAR SYSTEM_** : 4 possibilities
 
-    - You kill agressive aliens : win ressources
+   - You kill agressive aliens : win ressources
     
-    - You flee from aggressive aliens : lose fuel
+   - You flee from aggressive aliens : lose fuel
     
-    - You find a friendly alien : win ressources and fuel
+   - You find a friendly alien : win ressources and fuel
     
-    - You find a market : can buy fuel for ressources
+   - You find a market : can buy fuel for ressources
     
 **_BLACKHOLE_** : 3 possibilities, losing fuel and/or ressources.
 
@@ -61,6 +62,18 @@ https://soundbible.com
 https://spin.atomicobject.com/
 
 https://www.emanueleferonato.com/
+
+## Question and answer :
+1. What is easing? Write few types of easing. Where would you apply easing functions? 
+2. What are pros & cons of using Promises in Javascript?  What is the super-set of Promises?
+3. Which non programmable parts of the graphics pipeline can be used to speed up
+rendering and improve performance. Please give examples.
+4. Pick three design patterns that are in your opinion most useful for game development, describe them and write a short example how would you use them in development process.
+5. Explain Redux design pattern.
+6. What is game loop? What is FPS?
+7. Write code to convert an array of strings to an array of the lengths of those strings – use JS ES6 or TS
+8. Write code to sum an array of numbers – use JS ES6 or TS
+
 
 ***
 **Made by Théodore d'Avray**
