@@ -64,7 +64,7 @@ https://spin.atomicobject.com/
 https://www.emanueleferonato.com/
 
 ## Question and answer :
-**1. What is easing? Write few types of easing. Where would you apply easing functions? **
+**1. What is easing? Write few types of easing. Where would you apply easing functions?**
 
 Easing define how an animation should evolve in time, what behavior it should take.
 
