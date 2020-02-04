@@ -65,7 +65,25 @@ https://www.emanueleferonato.com/
 
 ## Question and answer :
 1. What is easing? Write few types of easing. Where would you apply easing functions? 
+Easing define how an animation should evolve in time, what behavior it should take.
+
+Some examples of easing types :
+- Ease in (animation evolve slowly at the begining and then quickly at the end)
+- Ease out (animation evolve quickly at the begining and then slowly at the end)
+- Linear (animation evolve in a linear way)
+
+You apply these functions when you create define the animation behavior.
+
 2. What are pros & cons of using Promises in Javascript?  What is the super-set of Promises?
+
+Pros :
+
+When you use Promises, you don't have to use nested callbacks (so the code is more understandable and with less indentation)
+
+Cons :
+
+The only cons of using Promises could be the difficulty to fully understand how it work and how to properly use them.
+
 3. Which non programmable parts of the graphics pipeline can be used to speed up
 rendering and improve performance. Please give examples.
 4. Pick three design patterns that are in your opinion most useful for game development, describe them and write a short example how would you use them in development process.
