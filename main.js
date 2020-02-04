@@ -331,7 +331,7 @@ class WheelScene extends Phaser.Scene {
       color: 'white'
     })
 
-    this.attemptsLeftText = this.add.text(10, 45, attempts + ' spins left', {
+    this.attemptsLeftText = this.add.text(10, 45, attempts + ' attempts remaining', {
       font: 'bold 25px Arial',
       align: 'center',
       color: 'white'
@@ -440,11 +440,11 @@ class WheelScene extends Phaser.Scene {
       points -= qtypoints
   }
   
-  removeAttempts(qtyspins){
-    if(attempts < qtyspins)
+  removeAttempts(qty){
+    if(attempts < qty)
       attempts = 0
     else
-      attempts -= qtyspins
+      attempts -= qty
   }
   
   
@@ -645,7 +645,7 @@ class WheelScene extends Phaser.Scene {
                   if(sound === true){
                     this.sound.play('earthsound');
                   }
-                  this.prizeDescText.setText('Home sweet home...\nThe spaceport offer your some fuel (+2 spins)\nDo you want to buy even more ?\n300points = 1 fuel\n (buy using "B")')
+                  this.prizeDescText.setText('Home sweet home...\nThe spaceport offer your some fuel (+2 fuel)\nDo you want to buy even more ?\n300 ressources = 1 fuel\n (buy using "B")')
                   buyFuelHuman = true
                   attempts += 2
                   this.attemptsLeftText.setText(attempts + '  remaining attempts')
@@ -669,19 +669,19 @@ class WheelScene extends Phaser.Scene {
                   const rand = Math.floor(Math.random() * Math.floor(4))
                   switch(rand){
                     case 0 :{
-                      this.prizeDescText.setText('You find some pretty agressive alien ships !\nBut your ship is better.\n You destroy them and scrap some ressources\n(+500 points)')
+                      this.prizeDescText.setText('You find some pretty agressive alien ships !\nBut your ship is better.\n You destroy them and scrap some ressources\n(+500 ressources)')
                       points += 500
                       this.pointText.setText(points + ' points')
                       break
                     }
                     case 1 :{
-                      this.prizeDescText.setText('You find some pretty agressive alien ships !\nThey are too strong for you.\n You flee, using a lot of fuel\n(-1 spin)')
+                      this.prizeDescText.setText('You find some pretty agressive alien ships !\nThey are too strong for you.\n You flee, using a lot of fuel\n(-1 fuel)')
                       this.removeAttempts(1)
                       this.attemptsLeftText.setText(attempts + '  remaining attempts')
                       break
                     }
                     case 2 :{
-                      this.prizeDescText.setText('You find a really frendly alien ship.\n"Take this human"\n "it will be more useful to you".\n(+1 spin and + 250 points)')
+                      this.prizeDescText.setText('You find a really frendly alien ship.\n"Take this human"\n "it will be more useful to you".\n(+1 fuel and + 250 ressources)')
                       points += 250
                       attempts += 1
                       this.pointText.setText(points + ' points')
@@ -689,7 +689,7 @@ class WheelScene extends Phaser.Scene {
                       break
                     }
                     case 3 :{
-                      this.prizeDescText.setText('You find a market station.\nThey sell fuel for really cheap !\n150points = 1 fuel\n (buy using "B")')
+                      this.prizeDescText.setText('You find a market station.\nThey sell fuel for really cheap !\n150 ressources = 1 fuel\n (buy using "B")')
                       buyFuelMarket = true
                       break
                     }
@@ -704,13 +704,13 @@ class WheelScene extends Phaser.Scene {
                   const rand = Math.floor(Math.random() * Math.floor(3))
                   switch(rand){
                     case 0 :{
-                      this.prizeDescText.setText('You got a little bit too close of a blackhole\nYou had to eject some ressources to lighten your ship\n(-100 points)')
+                      this.prizeDescText.setText('You got a little bit too close of a blackhole\nYou had to eject some ressources to lighten your ship\n(-100 ressources)')
                       this.removePoints(100)
                       this.pointText.setText(points + ' points')
                       break
                     }
                     case 1 :{
-                      this.prizeDescText.setText('You got too close of a blackhole!\nYou had to eject some ressources to lighten your ship\nYou also used a lot of fuel\n(-150 points and -1 spin)')
+                      this.prizeDescText.setText('You got too close of a blackhole!\nYou had to eject some ressources to lighten your ship\nYou also used a lot of fuel\n(-150 ressources and -1 fuel)')
                       this.removePoints(150)
                       this.removeAttempts(1)
                       this.attemptsLeftText.setText(attempts + '  remaining attempts')
@@ -718,7 +718,7 @@ class WheelScene extends Phaser.Scene {
                       break
                     }
                     case 2 :{
-                      this.prizeDescText.setText('You got way too close of a blackhole!!!\nYou had to eject a lot ressources to lighten your ship\nYou also used a lot of fuel\n(-300 points and -1 spin)')
+                      this.prizeDescText.setText('You got way too close of a blackhole!!!\nYou had to eject a lot ressources to lighten your ship\nYou also used a lot of fuel\n(-300 ressources and -1 fuel)')
                       this.removePoints(300)
                       this.removeAttempts(1)
                       this.attemptsLeftText.setText(attempts + '  remaining attempts')
@@ -790,9 +790,13 @@ class WheelScene extends Phaser.Scene {
                   if(sound === true){
                     this.sound.play('sunsound');
                   }
-                  this.canSpin = true
-                  attempts += 2
+                  this.prizeDescText.setText('You find some useful raw ressources next to the sun\nYou also use some solar energy as fuel.\n(+1 fuel and +300 ressources)')
+
+                  points += 300
+                  this.pointText.setText(points + ' points')
+                  attempts += 1
                   this.attemptsLeftText.setText(attempts + '  remaining attempts')
+                  this.canSpin = true
                   break
                 }
               }
