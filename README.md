@@ -96,6 +96,24 @@ An example would be to have a more efficient gaussian blur with linear sampling 
 
 **4. Pick three design patterns that are in your opinion most useful for game development, describe them and write a short example how would you use them in development process.**
 
+- Command pattern
+
+Commands are object-oriented remplacements for callbacks. They are methods called wrapped in an object. In fact, when you want to execute code when a command is used, you use the callback of an event to do so. The command pattern make it easier.
+
+For example, you can use the command pattern to build the basic mouvments of your character in the game.
+
+- State pattern
+
+The state pattern consist of storing the state of an object. The object can change it's behavior when it's internal state is modified.
+
+For example, store a character in a game as in an "attacking" state. It's behavior will change when it will be stored as "defending" state.
+
+- Flyweight pattern
+
+Store an object in two categories : the part that is dependent of the state and one that is not.
+
+For example, you store the state-dependent side of an character, such as the textures, animations... separately from the state-dependent side, such as the position.
+
 
 **5. Explain Redux design pattern.**
 
