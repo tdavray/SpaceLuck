@@ -2,7 +2,7 @@
 
 // the game itself
 let game
-let spinsLeft
+let attempts 
 let points
 let sound = true
 let buyFuelHuman = false
@@ -114,7 +114,7 @@ class MenuScene extends Phaser.Scene {
   }
 
   clickStart () {
-    spinsLeft = 5
+    attempts = 5
     points = 1000
     this.scene.start('WheelScene')
   }
@@ -331,7 +331,7 @@ class WheelScene extends Phaser.Scene {
       color: 'white'
     })
 
-    this.spinsLeftText = this.add.text(10, 45, spinsLeft + ' spins left', {
+    this.attemptsLeftText = this.add.text(10, 45, attempts + ' spins left', {
       font: 'bold 25px Arial',
       align: 'center',
       color: 'white'
@@ -354,7 +354,7 @@ class WheelScene extends Phaser.Scene {
     this.input.keyboard.on('keydown', function (input) {
       
       //SOUND SWITCH
-      if (input.key === 'a' && spinsLeft > 0) {
+      if (input.key === 'a' && attempts > 0) {
         console.log("trigger")
         sound = !sound
         var soundtxt = 'Press "A" to Activate sound'
@@ -368,9 +368,9 @@ class WheelScene extends Phaser.Scene {
       //EARTH EVENT
       if (input.key === 'b' && buyFuelHuman && points > 300) {
         this.scene.removePoints(300)
-        spinsLeft += 1
+        attempts += 1
         this.scene.pointText.setText(points + ' points')
-        this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+        this.scene.attemptsLeftText.setText(attempts + ' spins left')
         return
       }
       
@@ -378,21 +378,21 @@ class WheelScene extends Phaser.Scene {
       if (input.key === 'f' && ovniChoice) {
         const rand = Math.floor(Math.random() * Math.floor(2))
         if(rand === 0){
-          if(spinsLeft < 1){
+          if(attempts < 1){
             this.scene.prizeDescText.setText('The OVNI desepear,\n You had no fuel, so it took ressources... (-300 points)')
               this.scene.removePoints(300)
             this.scene.pointText.setText(points + ' points')
           }
           else{
-            this.scene.removeSpins(1)
+            this.scene.removeAttempts(1)
             this.scene.prizeDescText.setText('The OVNI desepear,\n but with some of your fuel... (-1 spin)')
-            this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+            this.scene.attemptsLeftText.setText(attempts + ' spins left')
           }
         }
         else{
           this.scene.prizeDescText.setText('The OVNI desepear,\n and you have more fuel ! (+1 spin)')
-          spinsLeft ++
-          this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+          attempts ++
+          this.scene.attemptsLeftText.setText(attempts + ' spins left')
         }
         this.scene.canSpin = true
         return
@@ -403,8 +403,8 @@ class WheelScene extends Phaser.Scene {
         if(rand === 0){
           if(points < 300){
             this.scene.prizeDescText.setText('The OVNI desepear,\n You had not enough ressources, so it took fuel... (-1 spin)')
-            this.scene.removeSpins(1)
-            this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+            this.scene.removeAttempts(1)
+            this.scene.attemptsLeftText.setText(attempts + ' spins left')
           }
           else{
             this.scene.removePoints(300)
@@ -425,9 +425,9 @@ class WheelScene extends Phaser.Scene {
       //MARKET EVENT (OUT OF SOLAR SYSTEM)
       if (input.key === 'b' && buyFuelMarket && points > 150) {
         this.scene.removePoints(150)
-        spinsLeft += 1
+        attempts += 1
         this.scene.pointText.setText(points + ' points')
-        this.scene.spinsLeftText.setText(spinsLeft + ' spins left')
+        this.scene.attemptsLeftText.setText(attempts + ' spins left')
         return
       }
     })
@@ -440,11 +440,11 @@ class WheelScene extends Phaser.Scene {
       points -= qtypoints
   }
   
-  removeSpins(qtyspins){
-    if(spinsLeft < qtyspins)
-      spinsLeft = 0
+  removeAttempts(qtyspins){
+    if(attempts < qtyspins)
+      attempts = 0
     else
-      spinsLeft -= qtyspins
+      attempts -= qtyspins
   }
   
   
@@ -560,12 +560,12 @@ class WheelScene extends Phaser.Scene {
   spinWheel () {
 
     // can we spin the wheel?
-    if (this.canSpin && spinsLeft > 0) {
+    if (this.canSpin && attempts > 0) {
       buyFuelHuman = false
       buyFuelMarket = false
       ovniChoice = false
-      spinsLeft -= 1
-      this.spinsLeftText.setText(spinsLeft + ' spins left')
+      this.removeAttempts(1)
+      this.attemptsLeftText.setText(attempts + ' spins left')
       if(sound === true){
         this.sound.play('spinsound');
       }
@@ -647,8 +647,8 @@ class WheelScene extends Phaser.Scene {
                   }
                   this.prizeDescText.setText('Home sweet home...\nThe spaceport offer your some fuel (+2 spins)\nDo you want to buy even more ?\n300points = 1 fuel\n (buy using "B")')
                   buyFuelHuman = true
-                  spinsLeft += 2
-                  this.spinsLeftText.setText(spinsLeft + ' spins left')
+                  attempts += 2
+                  this.attemptsLeftText.setText(attempts + ' spins left')
                   this.canSpin = true
                   break
                 }
@@ -676,16 +676,16 @@ class WheelScene extends Phaser.Scene {
                     }
                     case 1 :{
                       this.prizeDescText.setText('You find some pretty agressive alien ships !\nThey are too strong for you.\n You flee, using a lot of fuel\n(-1 spin)')
-                      this.removeSpins(1)
-                      this.spinsLeftText.setText(spinsLeft + ' spins left')
+                      this.removeAttempts(1)
+                      this.attemptsLeftText.setText(attempts + ' spins left')
                       break
                     }
                     case 2 :{
                       this.prizeDescText.setText('You find a really frendly alien ship.\n"Take this human"\n "it will be more useful to you".\n(+1 spin and + 250 points)')
                       points += 250
-                      spinsLeft += 1
+                      attempts += 1
                       this.pointText.setText(points + ' points')
-                      this.spinsLeftText.setText(spinsLeft + ' spins left')
+                      this.attemptsLeftText.setText(attempts + ' spins left')
                       break
                     }
                     case 3 :{
@@ -712,16 +712,16 @@ class WheelScene extends Phaser.Scene {
                     case 1 :{
                       this.prizeDescText.setText('You got too close of a blackhole!\nYou had to eject some ressources to lighten your ship\nYou also used a lot of fuel\n(-150 points and -1 spin)')
                       this.removePoints(150)
-                      this.removeSpins(1)
-                      this.spinsLeftText.setText(spinsLeft + ' spins left')
+                      this.removeAttempts(1)
+                      this.spinsLeftText.setText(attempts + ' spins left')
                       this.pointText.setText(points + ' points')
                       break
                     }
                     case 2 :{
                       this.prizeDescText.setText('You got way too close of a blackhole!!!\nYou had to eject a lot ressources to lighten your ship\nYou also used a lot of fuel\n(-300 points and -1 spin)')
                       this.removePoints(300)
-                      this.removeSpins(1)
-                      this.spinsLeftText.setText(spinsLeft + ' spins left')
+                      this.removeAttempts(1)
+                      this.spinsLeftText.setText(attempts + ' spins left')
                       this.pointText.setText(points + ' points')
                       break
                     }
@@ -791,8 +791,8 @@ class WheelScene extends Phaser.Scene {
                     this.sound.play('sunsound');
                   }
                   this.canSpin = true
-                  spinsLeft += 2
-                  this.spinsLeftText.setText(spinsLeft + ' spins left')
+                  attempts += 2
+                  this.spinsLeftText.setText(attempts + ' spins left')
                   break
                 }
               }
@@ -805,7 +805,7 @@ class WheelScene extends Phaser.Scene {
         }
       })
     }
-    if (this.canSpin && spinsLeft <= 0) {
+    if (this.canSpin && attempts <= 0) {
       this.prizeText.setText("It's the end of your interstellar trip !")
       this.prizeDescText.setText('Points : ' + points)
       this.nameTextA = this.add.text(950, 800, '_', {
