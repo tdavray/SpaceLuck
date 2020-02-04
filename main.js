@@ -20,7 +20,7 @@ window.onload = function () {
   const gameConfig = {
 
     autoStart: true,
-    scene: [MenuScene, WheelScene],
+    scene: [MenuScene, WheelScene, EndScene],
 
     // resolution and scale mode
     scale: {
@@ -809,7 +809,7 @@ class WheelScene extends Phaser.Scene {
         }
       })
     }
-    if (this.canSpin && attempts <= 0) {
+    if (this.canSpin && attempts === 0) {
       this.prizeText.setText("It's the end of your interstellar trip !")
       this.prizeDescText.setText('Points : ' + points)
       this.nameTextA = this.add.text(950, 800, '_', {
@@ -828,21 +828,22 @@ class WheelScene extends Phaser.Scene {
         color: 'white'
       })
       this.input.keyboard.on('keydown', function (input) {
-        if (this.nameTextA.text === '_' && input.key > 'a' && input.key > 'z') {
+        if (this.nameTextA.text === '_' && input.key > 'a' && input.key < 'z') {
           this.nameTextA.setText(input.key)
           return
-        } else if (this.nameTextB.text === '_') {
+        } else if (this.nameTextB.text === '_' && input.key > 'a' && input.key < 'z') {
           this.nameTextB.setText(input.key)
           return
-        } else if (this.nameTextC.text === '_') {
+        } else if (this.nameTextC.text === '_' && input.key > 'a' && input.key < 'z') {
           this.nameTextC.setText(input.key)
           return
         }
         if (this.nameTextA.text !== '_' && this.nameTextB.text !== '_' && this.nameTextC.text !== '_' && input.key === 'Enter') {
           scoreJson.scores.push({letter1: this.nameTextA.text, letter2: this.nameTextB.text, letter3: this.nameTextC.text, score:points});
-          this.scene.start('MenuScene')
+          this.scene.start('EndScene')
         }
       }, this)
+      attempts = -1
     }
   }
   
@@ -891,7 +892,7 @@ class EndScene extends Phaser.Scene {
     //bg.setOrigin(0, 0)
     bg.setScale(0.17,0.17)
 
-    var title = this.add.text(950, 200, "It's the end of your interstellar trip !", {
+    var title = this.add.text(950, 200, "It's the end of your interstellar trip !\n Thanks for playing Space Luck !", {
       font: 'bold 30px Arial',
       align: 'center',
       color: 'white'
@@ -899,13 +900,32 @@ class EndScene extends Phaser.Scene {
     // center the text
     title.setOrigin(0.5)
     
-    var score = this.add.text(950, 400, 'Your score : ' + points, {
+    var score = this.add.text(950, 300, 'Your score : ' + points, {
       font: 'bold 30px Arial',
       align: 'center',
       color: 'white'
     }) 
     // center the text
     score.setOrigin(0.5)
+    
+    var commentContent = this.nameTextA.text + this.nameTextB.text + this.nameTextC.text + "\n"
+    if(points < 1000){
+      commentContent += "You will do better next time..."
+    }
+    if(points > 1000 && ){
+      commentContent += "You did great !"
+    }
+    if(points < 1000){
+      commentContent += "You will do better next time..."
+    }
+    var comment = this.add.text(950, 400, "It's the end of your interstellar trip !\n Thanks for playing Space Luck !", {
+      font: 'bold 30px Arial',
+      align: 'center',
+      color: 'white'
+    }) 
+    // center the text
+    comment.setOrigin(0.5)
+    
     
     var back = this.add.text(950, 500, 'Go to menu', {
       font: 'bold 30px Arial',
@@ -933,5 +953,9 @@ class EndScene extends Phaser.Scene {
     attempts = 1
     points = 1000
     this.scene.start('WheelScene')
+  }
+  
+  clickBack () {
+    this.scene.start('MenuScene')
   }
 }
