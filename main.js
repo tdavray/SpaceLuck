@@ -810,37 +810,35 @@ class WheelScene extends Phaser.Scene {
       })
     }
     if (this.canSpin && attempts === 0) {
-      this.prizeText.setText("It's the end of your interstellar trip !")
+      this.prizeText.setText("It's the end of your interstellar trip !\nPlease enter 3 letters for you name")
       this.prizeDescText.setText('Points : ' + points)
-      this.nameTextA = this.add.text(950, 800, '_', {
-        font: 'bold 25px Arial',
+      this.nameTextA = this.add.text(850, 800, '_', {
+        font: 'bold 60px Arial',
         align: 'center',
         color: 'white'
       })
-      this.nameTextB = this.add.text(980, 800, '_', {
-        font: 'bold 25px Arial',
+      this.nameTextB = this.add.text(910, 800, '_', {
+        font: 'bold 60px Arial',
         align: 'center',
         color: 'white'
       })
-      this.nameTextC = this.add.text(1010, 800, '_', {
-        font: 'bold 25px Arial',
+      this.nameTextC = this.add.text(970, 800, '_', {
+        font: 'bold 60px Arial',
         align: 'center',
         color: 'white'
       })
       this.input.keyboard.on('keydown', function (input) {
-        if (this.nameTextA.text === '_' && input.key > 'a' && input.key < 'z') {
-          this.nameTextA.setText(input.key)
+        if (this.nameTextA.text === '_' && input.key >= 'a' && input.key <= 'z') {
+          this.nameTextA.setText(input.key.toUpperCase())
           return
-        } else if (this.nameTextB.text === '_' && input.key > 'a' && input.key < 'z') {
-          this.nameTextB.setText(input.key)
+        } else if (this.nameTextB.text === '_' && input.key >= 'a' && input.key <= 'z') {
+          this.nameTextB.setText(input.key.toUpperCase())
           return
-        } else if (this.nameTextC.text === '_' && input.key > 'a' && input.key < 'z') {
-          this.nameTextC.setText(input.key)
-          return
-        }
-        if (this.nameTextA.text !== '_' && this.nameTextB.text !== '_' && this.nameTextC.text !== '_' && input.key === 'Enter') {
+        } else if (this.nameTextC.text === '_' && input.key >= 'a' && input.key <= 'z') {
+          this.nameTextC.setText(input.key.toUpperCase())
           scoreJson.scores.push({letter1: this.nameTextA.text, letter2: this.nameTextB.text, letter3: this.nameTextC.text, score:points});
-          this.scene.start('EndScene')
+          this.scene.start('EndScene', { name: this.nameTextA.text + this.nameTextB.text + this.nameTextC.text })
+          return
         }
       }, this)
       attempts = -1
@@ -886,21 +884,25 @@ class EndScene extends Phaser.Scene {
     
     //this.load.image('play', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fplay.png?v=1580653667696')
   }
+  
+  init(data){
+    this.name = data.name;
+  }
 
   create () {
     var bg = this.add.image(400, 450, 'background')
     //bg.setOrigin(0, 0)
     bg.setScale(0.17,0.17)
 
-    var title = this.add.text(950, 200, "It's the end of your interstellar trip !\n Thanks for playing Space Luck !", {
-      font: 'bold 30px Arial',
+    var title = this.add.text(950, 200, "Thanks for playing Space Luck !", {
+      font: 'bold 50px Arial',
       align: 'center',
       color: 'white'
     }) 
     // center the text
     title.setOrigin(0.5)
     
-    var score = this.add.text(950, 300, 'Your score : ' + points, {
+    var score = this.add.text(950, 300, this.name + ' score : ' + points, {
       font: 'bold 30px Arial',
       align: 'center',
       color: 'white'
@@ -908,17 +910,17 @@ class EndScene extends Phaser.Scene {
     // center the text
     score.setOrigin(0.5)
     
-    var commentContent = this.nameTextA.text + this.nameTextB.text + this.nameTextC.text + "\n"
+    var commentContent =  ''
     if(points < 1000){
       commentContent += "You will do better next time..."
     }
-    if(points > 1000 && ){
+    else if(points > 1000 && points < 3000){
       commentContent += "You did great !"
     }
-    if(points < 1000){
-      commentContent += "You will do better next time..."
+    else{
+      commentContent += "Wow really impressive !"
     }
-    var comment = this.add.text(950, 400, "It's the end of your interstellar trip !\n Thanks for playing Space Luck !", {
+    var comment = this.add.text(950, 400, commentContent, {
       font: 'bold 30px Arial',
       align: 'center',
       color: 'white'
@@ -927,7 +929,7 @@ class EndScene extends Phaser.Scene {
     comment.setOrigin(0.5)
     
     
-    var back = this.add.text(950, 500, 'Go to menu', {
+    var back = this.add.text(850, 500, 'Go to menu', {
       font: 'bold 30px Arial',
       align: 'center',
       color: 'white'
@@ -937,7 +939,7 @@ class EndScene extends Phaser.Scene {
     back.setInteractive({ useHandCursor: true })
     back.on('pointerdown', () => this.clickBack())
     
-    var play = this.add.text(950, 500, 'Play again', {
+    var play = this.add.text(1050, 500, 'Play again', {
       font: 'bold 30px Arial',
       align: 'center',
       color: 'white'
