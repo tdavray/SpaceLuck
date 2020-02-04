@@ -114,7 +114,7 @@ class MenuScene extends Phaser.Scene {
   }
 
   clickStart () {
-    attempts = 5
+    attempts = 1
     points = 1000
     this.scene.start('WheelScene')
   }
@@ -140,7 +140,7 @@ class MenuScene extends Phaser.Scene {
       comparison = 1;
     }
     return comparison;
-}
+  }
 }
 
 
@@ -828,7 +828,7 @@ class WheelScene extends Phaser.Scene {
         color: 'white'
       })
       this.input.keyboard.on('keydown', function (input) {
-        if (this.nameTextA.text === '_') {
+        if (this.nameTextA.text === '_' && input.key > 'a' && input.key > 'z') {
           this.nameTextA.setText(input.key)
           return
         } else if (this.nameTextB.text === '_') {
@@ -872,5 +872,66 @@ class WheelScene extends Phaser.Scene {
       });
           
     }
+  }
+}
+
+class EndScene extends Phaser.Scene {
+  constructor () {
+    super({ key: 'EndScene' })
+  }
+
+  preload () {
+    this.load.image('background', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship.png?v=1580653230507')
+    
+    //this.load.image('play', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fplay.png?v=1580653667696')
+  }
+
+  create () {
+    var bg = this.add.image(400, 450, 'background')
+    //bg.setOrigin(0, 0)
+    bg.setScale(0.17,0.17)
+
+    var title = this.add.text(950, 200, "It's the end of your interstellar trip !", {
+      font: 'bold 30px Arial',
+      align: 'center',
+      color: 'white'
+    }) 
+    // center the text
+    title.setOrigin(0.5)
+    
+    var score = this.add.text(950, 400, 'Your score : ' + points, {
+      font: 'bold 30px Arial',
+      align: 'center',
+      color: 'white'
+    }) 
+    // center the text
+    score.setOrigin(0.5)
+    
+    var back = this.add.text(950, 500, 'Go to menu', {
+      font: 'bold 30px Arial',
+      align: 'center',
+      color: 'white'
+    }) 
+    // center the text
+    back.setOrigin(0.5)
+    back.setInteractive({ useHandCursor: true })
+    back.on('pointerdown', () => this.clickBack())
+    
+    var play = this.add.text(950, 500, 'Play again', {
+      font: 'bold 30px Arial',
+      align: 'center',
+      color: 'white'
+    }) 
+    // center the text
+    play.setOrigin(0.5)
+
+    play.setInteractive({ useHandCursor: true })
+    play.on('pointerdown', () => this.clickStart())
+  }
+
+  clickStart () {
+    attempts = 1
+    points = 1000
+    this.scene.start('WheelScene')
   }
 }
