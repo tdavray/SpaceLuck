@@ -812,17 +812,17 @@ class WheelScene extends Phaser.Scene {
     if (this.canSpin && attempts === 0) {
       this.prizeText.setText("It's the end of your interstellar trip !\nPlease enter 3 letters for you name")
       this.prizeDescText.setText('Points : ' + points)
-      this.nameTextA = this.add.text(850, 800, '_', {
+      this.nameTextA = this.add.text(860, 800, '_', {
         font: 'bold 60px Arial',
         align: 'center',
         color: 'white'
       })
-      this.nameTextB = this.add.text(910, 800, '_', {
+      this.nameTextB = this.add.text(920, 800, '_', {
         font: 'bold 60px Arial',
         align: 'center',
         color: 'white'
       })
-      this.nameTextC = this.add.text(970, 800, '_', {
+      this.nameTextC = this.add.text(980, 800, '_', {
         font: 'bold 60px Arial',
         align: 'center',
         color: 'white'
