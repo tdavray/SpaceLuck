@@ -123,6 +123,14 @@ For example, you store the state-dependent side of an character, such as the tex
 
 **7. Write code to convert an array of strings to an array of the lengths of those strings – use JS ES6 or TS**
 
+```javascript
+ let planets = ['Mercury','Earth','Mars','Saturn']
+ console.log(planets)
+ planets.forEach(function(planet, index) {
+   planets[index] = planet.length;
+ });
+ console.log(planets)
+```
 
 **8. Write code to sum an array of numbers – use JS ES6 or TS**
 
