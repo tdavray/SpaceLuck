@@ -62,6 +62,7 @@ class MenuScene extends Phaser.Scene {
   }
 
   create () {
+    
     var bg = this.add.image(400, 450, 'background')
     //bg.setOrigin(0, 0)
     bg.setScale(0.17,0.17)
