@@ -127,13 +127,21 @@ For example, you store the state-dependent side of an character, such as the tex
  let planets = ['Mercury','Earth','Mars','Saturn']
  console.log(planets)
  planets.forEach(function(planet, index) {
-   planets[index] = planet.length;
- });
+   planets[index] = planet.length
+ })
  console.log(planets)
 ```
 
 **8. Write code to sum an array of numbers – use JS ES6 or TS**
 
+```javascript
+ let numbers = [3,6,2,7]
+ let sum = 0
+ numbers.forEach(function(number) {
+  sum += number
+ })
+ console.log(sum)
+```
 
 ***
 **Made by Théodore d'Avray**
