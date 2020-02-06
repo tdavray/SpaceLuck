@@ -119,9 +119,20 @@ For example, you store the state-dependent side of a character, such as the text
 
 **5. Explain Redux design pattern.**
 
+The goal of the redux design pattern is to simplify the way you can store and update the state of an application. All your update logic goes into one single function. 
+
+The redux design pattern is separated in 3 parts:
+- The store, with all the states of your app
+- The action contains all the informations sent from your app to the store.
+- The reducer tells to the store what state to change and how depending on the actions.
+
 
 **6. What is game loop? What is FPS?**
 
+The game loop is a loop that run continuously when the user start the game until he quits. 
+It is necessary because when the user is playing the game, a lot of different events (like moving the characters) can be done, and the game has to change intently. The game loop is a frame, so if the game is played with 60fps, this game loop will loop 60 times a second. 
+
+FPS stands for Frames per second, so it's the quantity of frames displayed per second. It is dependent of the resources of the computer, the complexity of the game and the internet connection in some cases.
 
 **7. Write code to convert an array of strings to an array of the lengths of those strings – use JS ES6 or TS**
 
