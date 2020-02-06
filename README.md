@@ -19,7 +19,7 @@ Resources = Points
 
 **_EARTH_** : +2 fuel an the possibility to buy more
 
-**_OVNI_** : Choice between fuel or resources : lose or win your choice.
+**_UFO_** : Choice between fuel or resources : lose or win your choice.
 
 **_OUT OF SOLAR SYSTEM_** : 4 possibilities
 
