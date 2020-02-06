@@ -181,9 +181,9 @@ const gameOptions = {
       degrees: getRandomDegree(),
       startColor: 0xadebeb,
       endColor: 0x1f7a7a,
-      rings: 3,
+      rings: 200,
       iconFrame: 0,
-      iconScale: 0.4,
+      iconScale: 0.3,
       text: 'Earth',
       enabled: true
     },
@@ -247,14 +247,14 @@ const gameOptions = {
 
   // wheel rounds before it stops
   wheelRounds: {
-    min: 5,
-    max: 11
+    min: 6,
+    max: 16
   },
 
   // degrees the wheel will rotate in the opposite direction before it stops
   backSpin: {
     min: 1,
-    max: 4
+    max: 3
   },
 
   // wheel radius, in pixels
@@ -282,11 +282,10 @@ class WheelScene extends Phaser.Scene {
     this.load.image('pin', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship.png?v=1580653230507')
 
     // loading icons spritesheet
-    let icons = this.load.spritesheet('icons', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Flogos.png?v=1580653952539', {
+    this.load.spritesheet('icons', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Flogos.png?v=1580653952539', {
       frameWidth: 200,
       frameHeight: 180
     })
-    icons.width(120)
     
     this.load.image('play', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fplay.png?v=1580653667696')
 
