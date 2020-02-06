@@ -115,7 +115,7 @@ class MenuScene extends Phaser.Scene {
   }
 
   clickStart () {
-    attempts = 1
+    attempts = 5
     points = 1000
     this.scene.start('WheelScene')
   }
@@ -247,7 +247,7 @@ const gameOptions = {
 
   // wheel rounds before it stops
   wheelRounds: {
-    min: 2,
+    min: 5,
     max: 11
   },
 
@@ -258,13 +258,13 @@ const gameOptions = {
   },
 
   // wheel radius, in pixels
-  wheelRadius: 240,
+  wheelRadius: 250,
 
   // color of stroke lines
   strokeColor: 0xffffff,
 
   // width of stroke lines
-  strokeWidth: 5
+  strokeWidth: 2
 }
 
 // Wheel scene
@@ -282,10 +282,11 @@ class WheelScene extends Phaser.Scene {
     this.load.image('pin', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship.png?v=1580653230507')
 
     // loading icons spritesheet
-    this.load.spritesheet('icons', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Flogos.png?v=1580653952539', {
+    let icons = this.load.spritesheet('icons', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Flogos.png?v=1580653952539', {
       frameWidth: 200,
       frameHeight: 180
     })
+    icons.width(120)
     
     this.load.image('play', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fplay.png?v=1580653667696')
 
