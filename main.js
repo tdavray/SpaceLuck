@@ -41,11 +41,6 @@ window.onload = function () {
   // game constructor
   game = new Phaser.Game(gameConfig)
 
-  // game.scene.add('menuScene', MenuScene);
-  // game.scene.add('wheelScene', WheelScene);
-
-  // game.scene.start('menuScene');
-
   // pure javascript to give focus to the page/frame
   window.focus()
 }
@@ -953,7 +948,7 @@ class EndScene extends Phaser.Scene {
   }
 
   clickStart () {
-    attempts = 1
+    attempts = 5
     points = 1000
     this.scene.start('WheelScene')
   }
