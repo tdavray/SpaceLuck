@@ -7,7 +7,7 @@ let points
 let sound = true
 let buyFuelHuman = false
 let buyFuelMarket = false
-let ovniChoice = false
+let ufoChoice = false
 let marsChoice = false
 
 let scoreJson = {
@@ -194,7 +194,7 @@ const gameOptions = {
       rings: 200,
       iconFrame: 8,
       iconScale: 0.4,
-      text: 'OVNI',
+      text: 'UFO',
       enabled: true
     },
     {
@@ -290,7 +290,7 @@ class WheelScene extends Phaser.Scene {
     this.load.image('play', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fplay.png?v=1580653667696')
 
     this.load.audio('spinsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fbonus.wav?v=1580653257764")
-    this.load.audio('ovnisound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FAppear.mp3?v=1580651020366")
+    this.load.audio('ufosound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FAppear.mp3?v=1580651020366")
     this.load.audio('sunsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FPower-Up.mp3?v=1580651261079")
     this.load.audio('blackholesound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FRed%20Alert.mp3?v=1580651528413")
     this.load.audio('earthsound',"https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2FCity_Centre.mp3?v=1580651716774")
@@ -375,47 +375,47 @@ class WheelScene extends Phaser.Scene {
         return
       }
       
-      //OVNI EVENT
-      if (input.key === 'f' && ovniChoice) {
+      //UFO EVENT
+      if (input.key === 'f' && ufoChoice) {
         const rand = Math.floor(Math.random() * Math.floor(2))
         if(rand === 0){
           if(attempts < 1){
-            this.scene.prizeDescText.setText('The OVNI desepear,\n You had no fuel, so it took resources... (-300 points)')
+            this.scene.prizeDescText.setText('The UFO desepear,\n You had no fuel, so it took resources... (-300 points)')
               this.scene.removePoints(300)
             this.scene.pointText.setText(points + ' points')
           }
           else{
             this.scene.removeAttempts(1)
-            this.scene.prizeDescText.setText('The OVNI desepear,\n but with some of your fuel... (-1 spin)')
+            this.scene.prizeDescText.setText('The UFO desepear,\n but with some of your fuel... (-1 spin)')
             this.scene.attemptsLeftText.setText(attempts + '  remaining attempts')
           }
         }
         else{
-          this.scene.prizeDescText.setText('The OVNI desepear,\n and you have more fuel ! (+1 spin)')
+          this.scene.prizeDescText.setText('The UFO desepear,\n and you have more fuel ! (+1 spin)')
           attempts ++
           this.scene.attemptsLeftText.setText(attempts + '  remaining attempts')
         }
         this.scene.canSpin = true
         return
       }
-      if (input.key === 'r' && ovniChoice) {
+      if (input.key === 'r' && ufoChoice) {
         const rand = Math.floor(Math.random() * Math.floor(2))
         console.log(rand)
         if(rand === 0){
           if(points < 300){
-            this.scene.prizeDescText.setText('The OVNI desepear,\n You had not enough resources, so it took fuel... (-1 spin)')
+            this.scene.prizeDescText.setText('The UFO desepear,\n You had not enough resources, so it took fuel... (-1 spin)')
             this.scene.removeAttempts(1)
             this.scene.attemptsLeftText.setText(attempts + '  remaining attempts')
           }
           else{
             this.scene.removePoints(300)
-            this.scene.prizeDescText.setText('The OVNI desepear,\n but also did some of your resources... (-300 points)')
+            this.scene.prizeDescText.setText('The UFO desepear,\n but also did some of your resources... (-300 points)')
             this.scene.pointText.setText(points + ' points')
           }
         }
         else{
           points += 300
-          this.scene.prizeDescText.setText('The OVNI desepear,\n and you have more resources! (+300 points)')
+          this.scene.prizeDescText.setText('The UFO desepear,\n and you have more resources! (+300 points)')
           this.scene.pointText.setText(points + ' points')
         }
         
@@ -564,7 +564,7 @@ class WheelScene extends Phaser.Scene {
     if (this.canSpin && attempts > 0) {
       buyFuelHuman = false
       buyFuelMarket = false
-      ovniChoice = false
+      ufoChoice = false
       this.removeAttempts(1)
       this.attemptsLeftText.setText(attempts + '  remaining attempts')
       if(sound === true){
@@ -653,12 +653,12 @@ class WheelScene extends Phaser.Scene {
                   this.canSpin = true
                   break
                 }
-                case 1 : { //  OVNI
+                case 1 : { //  UFO
                   if(sound === true){
-                    this.sound.play('ovnisound');
+                    this.sound.play('ufosound');
                   }
                   this.prizeDescText.setText('Should we be scared?\nYou hear a strange voice whisper : \n"FUEL OR RESOURCES?"\n(F for Fuel, R for resources)')
-                  ovniChoice = true
+                  ufoChoice = true
                   
                   //turnOver = true
                   break
