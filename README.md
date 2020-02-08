@@ -1,5 +1,5 @@
 # [Space Luck](https://space-luck.glitch.me/)
-## A lucky wheel Phaser 3 Game
+## A lucky wheel Phaser 3 Game, ONLY ON COMPUTER
 _Developed in the context of a technical test for PlaysafeSA_
 
 ## How To Play :
