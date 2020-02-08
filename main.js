@@ -51,7 +51,7 @@ class MenuScene extends Phaser.Scene {
   }
 
   preload () {
-    this.load.image('background', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship.png?v=1580653230507')
+    this.load.image('background', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship-bg.png?v=1581155639925')
     
     this.load.image('play', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fplay.png?v=1580653667696')
   }
@@ -59,8 +59,7 @@ class MenuScene extends Phaser.Scene {
   create () {
     
     var bg = this.add.image(400, 450, 'background')
-    //bg.setOrigin(0, 0)
-    bg.setScale(0.17,0.17)
+    bg.setScale(0.5,0.5)
 
     var title = this.add.text(950, 200, 'Space Luck', {
       font: 'bold 60px Arial',
@@ -274,7 +273,7 @@ class WheelScene extends Phaser.Scene {
   // method to be executed when the scene preloads
   preload () {
     // loading pin image
-    this.load.image('pin', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship.png?v=1580653230507')
+    this.load.image('pin', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship-pin.png?v=1581155290136https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship-pin.png?v=1581155290136')
 
     // loading icons spritesheet
     this.load.spritesheet('icons', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Flogos.png?v=1580653952539', {
@@ -381,12 +380,12 @@ class WheelScene extends Phaser.Scene {
           }
           else{
             this.scene.removeAttempts(1)
-            this.scene.prizeDescText.setText('The UFO desepear,\n but with some of your fuel... (-1 spin)')
+            this.scene.prizeDescText.setText('The UFO desepear,\n but with some of your fuel... (-1 attempt)')
             this.scene.attemptsLeftText.setText(attempts + '  remaining attempts')
           }
         }
         else{
-          this.scene.prizeDescText.setText('The UFO desepear,\n and you have more fuel ! (+1 spin)')
+          this.scene.prizeDescText.setText('The UFO desepear,\n and you have more fuel ! (+1 attempt)')
           attempts ++
           this.scene.attemptsLeftText.setText(attempts + '  remaining attempts')
         }
@@ -398,7 +397,7 @@ class WheelScene extends Phaser.Scene {
         console.log(rand)
         if(rand === 0){
           if(points < 300){
-            this.scene.prizeDescText.setText('The UFO desepear,\n You had not enough resources, so it took fuel... (-1 spin)')
+            this.scene.prizeDescText.setText('The UFO desepear,\n You had not enough resources, so it took fuel... (-1 attempt)')
             this.scene.removeAttempts(1)
             this.scene.attemptsLeftText.setText(attempts + '  remaining attempts')
           }
@@ -549,7 +548,7 @@ class WheelScene extends Phaser.Scene {
     // adding the pin in the middle of the canvas
 
     this.pin = this.add.sprite(950, 300, 'pin')
-    this.pin.setScale(0.012, 0.012)
+    this.pin.setScale(0.1, 0.1)
   }
 
   // function to spin the wheel
