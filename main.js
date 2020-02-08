@@ -730,52 +730,55 @@ class WheelScene extends Phaser.Scene {
                   }
                   marsChoice = true
                   let amount = 0
-                  this.prizeDescText.setText('On Mars, you play a betting game with an Alien\nPlease choose how much you want to bet : ')
-                  
-                  let color = points > 100 ? 'white' : 'grey';
-                  this.firstChoice = this.add.text(300, 420, '100', {
-                    font: 'bold 24px Arial',
-                    align: 'center',
-                    color: color
-                  })
-                  if(points > 100){
+                  if(points >= 100){
+                    this.prizeDescText.setText('On Mars, you play a betting game with an Alien\nPlease choose how much you want to bet : ')
+
+                    this.firstChoice = this.add.text(300, 420, '100', {
+                      font: 'bold 24px Arial',
+                      align: 'center',
+                      color: 'white'
+                    })
                     this.firstChoice.setInteractive({ useHandCursor: true })
                     this.firstChoice.on('pointerdown', () => this.marsSelect(100))
+
+                    let color = points >= 200 ? 'white' : 'grey';
+
+                    this.secondChoice = this.add.text(350, 420, '200', {
+                      font: 'bold 24px Arial',
+                      align: 'center',
+                      color: color
+                    })
+                    if(points >= 200){
+                      this.secondChoice.setInteractive({ useHandCursor: true })
+                      this.secondChoice.on('pointerdown', () => this.marsSelect(200))
+                    }
+
+                    color = points >= 500 ? 'white' : 'grey';
+
+                    this.thirdChoice = this.add.text(400, 420, '500', {
+                      font: 'bold 24px Arial',
+                      align: 'center',
+                      color: color
+                    })
+                    if(points >= 500){
+                      this.thirdChoice.setInteractive({ useHandCursor: true })
+                      this.thirdChoice.on('pointerdown', () => this.marsSelect(500))
+                    }
+
+                    this.lastChoice = this.add.text(450, 420, "all : " + points, {
+                      font: 'bold 24px Arial',
+                      align: 'center',
+                      color: 'white'
+                    })
+                    this.lastChoice.setInteractive({ useHandCursor: true })
+                    this.lastChoice.on('pointerdown', () => this.marsSelect(points))
+
+                    if(!marsChoice){
+                      this.canSpin = true
+                    }
                   }
-                  
-                  color = points > 200 ? 'white' : 'grey';
-                  
-                  this.secondChoice = this.add.text(350, 420, '200', {
-                    font: 'bold 24px Arial',
-                    align: 'center',
-                    color: color
-                  })
-                  if(points > 200){
-                    this.secondChoice.setInteractive({ useHandCursor: true })
-                    this.secondChoice.on('pointerdown', () => this.marsSelect(200))
-                  }
-                  
-                  color = points > 500 ? 'white' : 'grey';
-                  
-                  this.thirdChoice = this.add.text(400, 420, '500', {
-                    font: 'bold 24px Arial',
-                    align: 'center',
-                    color: color
-                  })
-                  if(points > 500){
-                    this.thirdChoice.setInteractive({ useHandCursor: true })
-                    this.thirdChoice.on('pointerdown', () => this.marsSelect(500))
-                  }
-                  
-                  this.lastChoice = this.add.text(450, 420, "all : " + points, {
-                    font: 'bold 24px Arial',
-                    align: 'center',
-                    color: 'white'
-                  })
-                  this.lastChoice.setInteractive({ useHandCursor: true })
-                  this.lastChoice.on('pointerdown', () => this.marsSelect(points))
-                  
-                  if(!marsChoice){
+                  else{
+                    this.prizeDescText.setText("On Mars, an alien is playing a betting game\nBut you don't have enough resources to bet...")
                     this.canSpin = true
                   }
                   
@@ -875,9 +878,7 @@ class EndScene extends Phaser.Scene {
   }
 
   preload () {
-    this.load.image('background', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship.png?v=1580653230507')
-    
-    //this.load.image('play', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fplay.png?v=1580653667696')
+    this.load.image('background', 'https://cdn.glitch.com/51afda45-62e0-4d8d-b6b1-038264655f6c%2Fspaceship-bg.png?v=1581155639925')
   }
   
   init(data){
@@ -886,8 +887,7 @@ class EndScene extends Phaser.Scene {
 
   create () {
     var bg = this.add.image(400, 450, 'background')
-    //bg.setOrigin(0, 0)
-    bg.setScale(0.17,0.17)
+    bg.setScale(0.5,0.5)
 
     var title = this.add.text(950, 200, "Thanks for playing Space Luck !", {
       font: 'bold 50px Arial',
@@ -909,7 +909,7 @@ class EndScene extends Phaser.Scene {
     if(points < 1000){
       commentContent += "You will do better next time..."
     }
-    else if(points > 1000 && points < 3000){
+    else if(points >= 1000 && points < 3000){
       commentContent += "You did great !"
     }
     else{
